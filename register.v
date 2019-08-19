@@ -10,7 +10,7 @@
  *
  * Rev 1.0
  * Author: Sam Ellicott
- * Date: 8-16-19
+ * Date: 8-18-19
  */
 
 module BIDI_REGISTER (
