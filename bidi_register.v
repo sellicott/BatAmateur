@@ -53,7 +53,7 @@ always @(posedge CLOCK) begin
     if (ENABLE) begin
         case (RW)
             // read data from the bus, if the reset condition is not specified
-            0: (!RESET) ? INTERNAL_DATA <= DATA;
+            0: INTERNAL_DATA <= (!RESET) ? DATA : ;
             // write the data to the bus
             1: DATA <= INTERNAL_DATA; 
             // if no valid RW signal, hold current data, output high impedence
