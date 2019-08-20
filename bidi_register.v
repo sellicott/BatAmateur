@@ -53,16 +53,16 @@ always @(posedge CLOCK) begin
     if (ENABLE) begin
         case (RW)
             // read data from the bus, if the reset condition is not specified
-            0: INTERNAL_DATA <= (!RESET) ? DATA : ;
+            0: INTERNAL_DATA <= (!RESET) ? DATA : {BUS_WIDTH{1'b0}};
             // write the data to the bus
             1: DATA <= INTERNAL_DATA; 
             // if no valid RW signal, hold current data, output high impedence
-            default: DATA <= {BUS_WIDTH{1'bx}}
+            default: DATA <= {BUS_WIDTH{1'bx}};
         endcase
     end 
     else begin
         // not enabled, set the output bus to high impedence
-        DATA <= {BUS_WIDTH{1'bz}}
+        DATA <= {BUS_WIDTH{1'bz}};
     end
 end
 endmodule
