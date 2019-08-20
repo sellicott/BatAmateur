@@ -36,6 +36,12 @@ begin
 	ALU_EN = 0;
 	ALU_OP = 0;
 	
+	if(RST = 1'b0)
+	begin
+		uOP = 3'b111;
+	end
+	else
+	begin
 	//now we configure the signals correctly
 	case(uOP)
 	
@@ -224,7 +230,7 @@ begin
 				uOP = 3'b111; //woops, missed one somewhere.
 			end
 	endcase
-	
+	end
 end
 
 endmodule
