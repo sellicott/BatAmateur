@@ -30,6 +30,7 @@ parameter COUNT_EN = 1;
 // INPUTS
 input wire RESET;
 input wire CLOCK;
+input wire RW;
 input wire ENABLE;
 input wire COUNT;
 // OUTPUT

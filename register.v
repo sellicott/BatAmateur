@@ -22,7 +22,7 @@ LOAD,    // low for read, high for write
 ENABLE,  // enable bus access
 COUNT,   // if high, the register will incriment
 
-DATA_IN  // data bus connection
+DATA_IN, // data bus connection
 DATA_OUT // data bus connection
 );
 // PARAMETERS
@@ -31,11 +31,12 @@ parameter COUNT_EN = 1;
 // INPUTS
 input wire RESET;
 input wire CLOCK;
+input wire LOAD;
 input wire ENABLE;
 input wire COUNT;
 // OUTPUT
 input  wire [BUS_WIDTH-1:0] DATA_IN;
-output wire [BUS_WIDTH-1:0] DATA_OUT;
+output reg  [BUS_WIDTH-1:0] DATA_OUT;
 
 reg [BUS_WIDTH-1:0] INTERNAL_DATA;
 
@@ -56,11 +57,11 @@ always @(posedge CLOCK) begin
 
     // The enable signal is independent of reset and count, except for data read
     if (ENABLE) begin
-        DATA_OUT <= INTERNAL_DATA
+        DATA_OUT <= INTERNAL_DATA;
     end 
     else begin
         // not enabled, set the output bus to high impedence
-        DATA_OUT <= {BUS_WIDTH{1'bz}}
+        DATA_OUT <= {BUS_WIDTH{1'bz}};
     end
 end
 endmodule
