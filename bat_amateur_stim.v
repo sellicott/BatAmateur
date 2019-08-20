@@ -19,35 +19,14 @@ inout  wire DATA_BUS;
 output wire ADDRESS_BUS;
 input  wire OUTPUT_BUS;
 
-// memory operations
-parameter iLDA 16'h0000;
-parameter iLDB 16'h0001;
-parameter iSTA ;
-parameter iSTB ;
-parameter iJMP ;
-parameter iJZC ;
-parameter iJNZ ;
-parameter iNOP ;
-
-// register operations
-parameter iAND ;
-parameter iOR ;
-parameter iNOT;
-parameter iXOR;
-parameter iADD;
-parameter iSUB;
-parameter iINV;
-parameter iINC;
-parameter iDEC;
-parameter iMOV;
-
 initial begin
     CLK = 1'b0;
-    RESET = 1'b0;
+    RESET = 1'b1;
     HALT = 1'b1;
     ADDRESS_BUS = {ADDRESS_WIDTH{1'b0}};
     // load in data values
 #CLK_PERIOD
+    RESET = 1'b0;
     ADDRESS_BUS = 16'h0010;
     DATA_BUS = 16'd0;
 #CLK_PERIOD
@@ -111,7 +90,6 @@ initial begin
   ADDRESS_BUS = 16'h0;
   DATA_BUS = {16{1'bz}};
   HALT = 1'b0;
-    
 end 
 
 assign #CLK_HALF_PERIOD CLK = !CLK;
