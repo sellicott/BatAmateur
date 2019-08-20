@@ -15,7 +15,7 @@
 
 `timescale 1ns/1ns
 
-module bidi_register (
+module bidi_register_output (
 RESET,   // syncronous reset
 CLOCK,   // clock
 RW,      // low for read, high for write
