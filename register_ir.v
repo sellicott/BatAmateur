@@ -24,6 +24,7 @@ COUNT,   // if high, the register will incriment
 
 DATA_IN, // data bus connection
 DATA_OUT // data bus connection
+INSTRUCTION_OUT
 );
 // PARAMETERS
 parameter BUS_WIDTH = 16;
@@ -37,6 +38,7 @@ input wire COUNT;
 // OUTPUT
 input  wire [BUS_WIDTH-1:0] DATA_IN;
 output reg  [BUS_WIDTH-1:0] DATA_OUT;
+output wire [BUS_WIDTH-1:0] INSTRUCTION_OUT;
 
 reg [BUS_WIDTH-1:0] INTERNAL_DATA;
 
@@ -64,4 +66,6 @@ always @(posedge CLOCK) begin
         DATA_OUT <= {BUS_WIDTH{1'bz}};
     end
 end
+
+assign INSTRUCTION_OUT = INTERNAL_DATA;
 endmodule
