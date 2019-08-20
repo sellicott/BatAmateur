@@ -13,7 +13,9 @@
  * Date: 8-16-19
  */
 
-module BIDI_REGISTER (
+`timescale 1ns/1ns
+
+module bidi_register (
 RESET,   // syncronous reset
 CLOCK,   // clock
 RW,      // low for read, high for write
