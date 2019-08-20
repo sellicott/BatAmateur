@@ -20,8 +20,8 @@ output wire ADDRESS_BUS;
 input  wire OUTPUT_BUS;
 
 // memory operations
-parameter iLDA 16'0000;
-parameter iLDB ;
+parameter iLDA 16'h0000;
+parameter iLDB 16'h0001;
 parameter iSTA ;
 parameter iSTB ;
 parameter iJMP ;
@@ -61,51 +61,51 @@ initial begin
     // LDA <value 5>
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0000;
-    DATA_BUS = iLDA | 16'h12;
-    // MOV A -> R2
+    DATA_BUS = 16'h0012;
+    // MOV A -> R3
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0001;
-    DATA_BUS = 4'b0111 | ((5'b11111 << 7) | (3'h3 << 3) | (3'h0 << 0);
+    DATA_BUS = (4'b0111 << 12) | ((5'b11111 << 7) | (3'h3 << 3) | (3'h0 << 0);
 // LDA VAL 0
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0002;
-    DATA_BUS = iLDA | 16'h10;
+    DATA_BUS = 16'h0010;
 // LDA VAL 1
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0003;
-    DATA_BUS = iLDA | 16'h10;
+    DATA_BUS = 16'h0011;
 // A+B -> A
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0004;
-    DATA_BUS = ;
-// MOV B -> R1
+    DATA_BUS = (4'b0111 << 12) | ((5'b00000 << 7) | (1'b0 << 7) | (3'h0 << 3) | (3'h1 << 0);
+// MOV B -> R2
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0005;
-    DATA_BUS = ;
+    DATA_BUS = (4'b0111 << 12) | ((5'b11111 << 7) | (3'h2 << 3) | (3'h1 << 0);
 // MOV A -> B 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0006;
-    DATA_BUS = ;
-// MOV R1 -> A 
+    DATA_BUS = (4'b0111 << 12) | ((5'b11111 << 7) | (3'h1 << 3) | (3'h0 << 0);
+// MOV R2 -> A 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0007;
-    DATA_BUS = ;
-// DEC r2
+    DATA_BUS = (4'b0111 << 12) | ((5'b11111 << 7) | (3'h0 << 3) | (3'h2 << 0);
+// DEC r3
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0008;
-    DATA_BUS = ;
+    DATA_BUS = 16'h73E1;
 // JNZ 0x04
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0009;
-    DATA_BUS = ;
+    DATA_BUS = 16'h6FFA;
 // NOP
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000A;
-    DATA_BUS = ;
+    DATA_BUS = 16'hF000;
 // JMP -1 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000B;
-    DATA_BUS = ;
+    DATA_BUS = 16'h4FFF;
 
 #CLK_PERIOD
   ADDRESS_BUS = 16'h0;
