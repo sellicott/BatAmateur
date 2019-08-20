@@ -45,24 +45,14 @@ always @(posedge CLOCK) begin
     end
     // only increment if the functionality is enabled and we are not reading
     // in data from the bus and the count operation is specified
+    else if (ENABLE && RW == 0) begin
+        INTERNAL_DATA <= DATA;
+    end 
     else if (COUNT_EN && RW != 0 && COUNT) begin
         INTERNAL_DATA <= INTERNAL_DATA + 1;
     end
-
-    // The enable signal is independent of reset and count, except for data read
-    if (ENABLE) begin
-        case (RW)
-            // read data from the bus, if the reset condition is not specified
-            0: INTERNAL_DATA <= (!RESET) ? DATA : {BUS_WIDTH{1'b0}};
-            // write the data to the bus
-            1: DATA <= INTERNAL_DATA; 
-            // if no valid RW signal, hold current data, output high impedence
-            default: DATA <= {BUS_WIDTH{1'bx}};
-        endcase
-    end 
-    else begin
-        // not enabled, set the output bus to high impedence
-        DATA <= {BUS_WIDTH{1'bz}};
-    end
 end
+
+assign DATA = (ENABLE && RW == 1) ? INTERNAL_DATA : {BUS_WIDTH{1'bz}};
+
 endmodule
