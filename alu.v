@@ -5,7 +5,8 @@ module alu
    input wire enable,              // enables bus access
    input wire carry_in,            // carry in flag
    output wire [15:0] data,        // connection to the bus
-   output wire carry_out           // carry out flag 
+   output wire carry_out,          // carry out flag 
+   output wire zero_flag
 );
 
 parameter carry_bit = 16; // carry out bit of the resulting operation
@@ -15,6 +16,7 @@ reg [16:0] result;
 
 // save the carry out bit 
 assign carry_out = (enable) ? result[carry_bit] : 1'bz;
+assign zero_flag = (enable) ? result == 16'h0 : 1'bz;
 
 // connect the output to the bus if enabled
 assign data = (enable) ? result[15:0] : 16'bz;
