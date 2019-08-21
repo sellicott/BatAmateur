@@ -36,7 +36,7 @@ begin
 	ALU_EN = 0;
 	ALU_OP = 0;
 	
-	if(RST = 1'b0)
+	if(RST == 1'b0)
 	begin
 		uOP = 3'b111;
 	end
@@ -47,16 +47,16 @@ begin
 	
 		0: //initial retrieval
 			begin
-			PC = 3'b011;
-			MAR = 2'b01;
+			PC <= 3'b011;
+			MAR <= 2'b01;
 			end
 
 		1: //load from memory into IR
 			begin
-			PC = 3'b110; 
-			MAR = 2'b11;
-			RAM = 2'b11;
-			IR = 2'b01;
+			PC <= 3'b110; 
+			MAR <= 2'b11;
+			RAM <= 2'b11;
+			IR <= 2'b01;
 			end
 	
 		2: //and he, upon, look'd his creation,
@@ -73,21 +73,21 @@ begin
 					if(INSTR[11:7] == 5'b11111)
 					begin
 						//r1 enable
-						REGS[INSTR[5:3]*3] = 1'b1;
+						REGS[INSTR[5:3]*3] <= 1'b1;
 						//r2 enable and read out
-						REGS[INSTR[2:0]*3+1] = 1'b1;
-						REGS[INSTR[2:0]*3] = 1'b1;
+						REGS[INSTR[2:0]*3+1] <= 1'b1;
+						REGS[INSTR[2:0]*3] <= 1'b1;
 						//reset
-						uOP = 3'b111;
+						uOP <= 3'b111;
 					end
 					//check inc
 					else if(INSTR[11:7] == 5'b11110)
 					begin
 						//r1 inc and read out (no enable)
-						REGS[INSTR[5:3]*3+2] = 1'b1;
-						REGS[INSTR[5:3]*3+1] = 1'b1;
+						REGS[INSTR[5:3]*3+2] <= 1'b1;
+						REGS[INSTR[5:3]*3+1] <= 1'b1;
 						//reset
-						uOP = 3'b111;
+						uOP <= 3'b111;
 					end
 					else
 					begin
@@ -96,9 +96,9 @@ begin
 						//this means if enable is written to twice, nothing happens
 						
 						//enable A to write to
-						REGS[0] = 1'b1;
-						REGS[INSTR[5:3]*3] = (REGS[INSTR[5:3]*3]) ^ 1'b1;
-						REGS[INSTR[5:3]*3+1] = 1'b1;
+						REGS[0] <= 1'b1;
+						REGS[INSTR[5:3]*3] <= (REGS[INSTR[5:3]*3]) ^ 1'b1;
+						REGS[INSTR[5:3]*3+1] <= 1'b1;
 					end
 				end
 				else
@@ -114,26 +114,26 @@ begin
 							if(INSTR[15] == 1)
 							begin
 								//write to A
-								REGS[0] = 1'b1;
-								PC = 3'b011;
+								REGS[0] <= 1'b1;
+								PC <= 3'b011;
 							end
 							else
 							begin
 								//write addr to mar
-								IR = 2'b11;
-								MAR = 2'b01;
+								IR <= 2'b11;
+								MAR <= 2'b01;
 							end
 						end
 						else
 						begin
-							uOP = 3'b111;
+							uOP <= 3'b111;
 						end
 					end
 					else if(INSTR[14]==1'b0) //LD or STR
 					begin
 						//ld and str are the same here
-						IR = 2'b11;
-						MAR = 2'b01;
+						IR <= 2'b11;
+						MAR <= 2'b01;
 					end
 				end
 			end
@@ -141,9 +141,9 @@ begin
 		    begin
 				if(INSTR[15:12] == 4'b0111)
 				begin
-					REGS[3] = 1'b1;
-					REGS[INSTR[2:0]] = REGS[INSTR[2:0]] ^ 1'b1;
-					REGS[INSTR[2:0]+1] = 1'b1;
+					REGS[3] <= 1'b1;
+					REGS[INSTR[2:0]] <= REGS[INSTR[2:0]] ^ 1'b1;
+					REGS[INSTR[2:0]+1] <= 1'b1;
 				end
 				else
 				begin
@@ -151,15 +151,15 @@ begin
 					begin
 						if(INSTR[15] == 1'b1)
 						begin
-							RAM = 2'b11;
-							MAR = 2'b11;
-							PC = 3'b001;
-							uOP = 3'b111;
+							RAM <= 2'b11;
+							MAR <= 2'b11;
+							PC <= 3'b001;
+							uOP <= 3'b111;
 						end
 						else
 						begin
-							REGS[3] = 1'b1;
-							IR = 2'b11;
+							REGS[3] <= 1'b1;
+							IR <= 2'b11;
 						end
 					end
 					else
@@ -168,23 +168,23 @@ begin
 						//store immediate
 						if(INSTR[13]==1'b1 && INSTR[15] == 1'b0)
 						begin
-							REGS[INSTR[12]*3+1] = 1'b1;
-							REGS[INSTR[12]*3] = 1'b1;
-							RAM = 2'b01;
-							MAR = 2'b11;
-							uOP = 3'b111;
+							REGS[INSTR[12]*3+1] <= 1'b1;
+							REGS[INSTR[12]*3] <= 1'b1;
+							RAM <= 2'b01;
+							MAR <= 2'b11;
+							uOP <= 3'b111;
 						end
 						else if(INSTR[13]==1'b0 && INSTR[15]==1'b0)
 						begin
-							MAR = 2'b11;
-							RAM = 2'b11;
-							REGS[INSTR[6]*3] = 1'b1;
-							uOP = 3'b111;
+							MAR <= 2'b11;
+							RAM <= 2'b11;
+							REGS[INSTR[6]*3] <= 1'b1;
+							uOP <= 3'b111;
 						end
 						else
 						begin
-							RAM = 2'b11;
-							MAR = 2'b01;
+							RAM <= 2'b11;
+							MAR <= 2'b01;
 						end
 					end
 				end
@@ -193,41 +193,41 @@ begin
 		    begin
 				if(INSTR[15:12] == 4'b0111)
 				begin
-					ALU_EN = 1'b1;
-					ALU_OP = INSTR[11:7];
-					REGS[INSTR[6]*3] = 1'b1;
-					uOP = 3'b111;
+					ALU_EN <= 1'b1;
+					ALU_OP <= INSTR[11:7];
+					REGS[INSTR[6]*3] <= 1'b1;
+					uOP <= 3'b111;
 				end
 				else
 				begin
 					if(INSTR[14]==1'b1)
 					begin
-						ALU_EN = 1'b1;
-						ALU_OP = 5'b00000; //NOTE: check if adds
-						PC = 2'b01;
-						uOP = 3'b111;
+						ALU_EN <= 1'b1;
+						ALU_OP <= 5'b00000; //NOTE: check if adds
+						PC <= 2'b01;
+						uOP <= 3'b111;
 					end
 					else
 					begin
 						if(INSTR[13] == 1'b1)
 						begin
-							RAM = 2'b01;
-							REGS[INSTR[6]*3] = 1'b1;
-							REGS[INSTR[6]*3+1] = 1'b1;
-							uOP = 3'b111;
+							RAM <= 2'b01;
+							REGS[INSTR[6]*3] <= 1'b1;
+							REGS[INSTR[6]*3+1] <= 1'b1;
+							uOP <= 3'b111;
 						end
 						else
 						begin
-							REGS[INSTR[6]*3] = 1'b1;
-							RAM = 2'b11;
-							uOP = 3'b111;
+							REGS[INSTR[6]*3] <= 1'b1;
+							RAM <= 2'b11;
+							uOP <= 3'b111;
 						end
 					end
 				end
 			end
 		default:
 		    begin
-				uOP = 3'b111; //woops, missed one somewhere.
+				uOP <= 3'b111; //woops, missed one somewhere.
 			end
 	endcase
 	end
