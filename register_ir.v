@@ -23,7 +23,7 @@ ENABLE,  // enable bus access
 COUNT,   // if high, the register will incriment
 
 DATA_IN, // data bus connection
-DATA_OUT // data bus connection
+DATA_OUT, // data bus connection
 INSTRUCTION_OUT
 );
 // PARAMETERS
