@@ -15,7 +15,7 @@
 
 `timescale 1ns/1ns
 
-module register (
+module register_ir (
 RESET,   // syncronous reset
 CLOCK,   // clock
 LOAD,    // low for read, high for write
