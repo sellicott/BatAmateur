@@ -137,7 +137,7 @@ memory RAM(
     .clk(CLK), 
     .read_write(CTRL_REGS[6] | RW), 
 	.enable(CTRL_REGS[5] | RAM_EN), 
-    .reset(RST), 
+    .reset(!RST), 
     .data(BUS)
 );
 
