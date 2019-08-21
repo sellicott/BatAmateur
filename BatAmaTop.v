@@ -1,9 +1,9 @@
 `timescale 1ns/1ns
 
-module bat_amateur (
+module BatAmateurv2(
 	inout wire [15:0] DATA,
 	input wire [15:0] ADDRESS,
-	input wire RW, RAM_EN, HALT, CLK, RST,
+	input wire R/W, RAM_EN, HALT, CLK, RST,
 	output wire [15:0] OUT
 );
 
@@ -14,14 +14,13 @@ wire [15:0] INSTR;
 wire [8:0]  CTRL_REGS;
 wire [5:0]  ALU_CTRL;
 wire [15:0] ALU_IN1, ALU_IN2;
-wire [15:0] RAM_ADDR;
 
 BatAmateurController CTRL(
-    .CLK(CLK | HALT), 
-    .RST(RST),
+    .CLK(!CLK & !HALT), 
+    .RST(RST), 
     .INSTR(INSTR), 
     .PC(CTRL_REGS[2:0]), 
-    .MAR(CTRL_REGS[4:3]), 
+    .MAR(CTRL_REGS[4:3], 
     .RAM(CTRL_REGS[6:5]), 
     .IR(CTRL_REGS[8:7]), 
     .REGS(REGS), 
@@ -44,9 +43,9 @@ MAR_REG (
     .RESET(RST), 
     .CLOCK(CLK), 
     .LOAD(CTRL_REGS[4]), 
-    .ENABLE(CTRL_REGS[3] | !HALT),
+    .ENABLE(CTRL_REGS[3] & !HALT),
     .DATA_IN(BUS), 
-    .DATA_OUT(RAM_ADDR)
+    .DATA_OUT(ADDRESS)
 );
 
 bidi_register_output A_REG(
@@ -75,7 +74,7 @@ bidi_register PC(
     .RW(CTRL_REGS[1]), 
     .ENABLE(CTRL_REGS[0]), 
     .COUNT(CTRL_REGS[2]),
-		.DATA(BUS)
+    .DATA(BUS)
 );
 
 bidi_register THREE(
@@ -134,7 +133,7 @@ bidi_register_output OUTREG(
 );
 
 memory RAM(
-    .address(RAM_ADDR | ADDRESS), 
+    .address(ADDRESS), 
     .clk(CLK), 
     .read_write(CTRL_REGS[6] | RW), 
 	.enable(CTRL_REGS[5] | RAM_EN), 
@@ -146,8 +145,8 @@ register_ir #(.COUNT_EN(0))
 IR_REG(
     .RESET(RST), 
     .CLOCK(CLK), 
-    .LOAD(CTRL_REGS[8]), 
-    .ENABLE(CTRL_REGS[7]),
+    .LOAD(CTRL_REG[8]), 
+    .ENABLE(CTRL_REG[7]),
     .DATA_IN(BUS), 
     .DATA_OUT(BUS), 
     .INSTRUCTION_OUT(INSTR)
