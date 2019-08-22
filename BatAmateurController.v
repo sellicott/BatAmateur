@@ -13,19 +13,19 @@ module BatAmateurController(
 	output reg PC_RW,
 	output reg PC_EN,
 
-	output reg MAR_RW,
+	output reg MAR_LOAD,
 	output reg MAR_EN,
 
 	output reg RAM_RW,
 	output reg RAM_EN,
 	
-	output reg IR_RW,
+	output reg IR_LOAD,
 	output reg IR_EN,
 
 	//A, B, 3, 4, 5, 6, 7, OUT (from small to big)
-	output reg REGS_INC[7:0],
-	output reg REGS_RW[7:0],
-	output reg REGS_EN[7:0],
+	output reg [7:0] REGS_INC,
+	output reg [7:0] REGS_RW,
+	output reg [7:0] REGS_EN,
 
 	output reg ALU_EN,
 	output reg [4:0] ALU_OP
