@@ -4,6 +4,8 @@ module bat_amateur_stim (
 HALT,
 CLK,
 RESET,
+RAM_RW,
+RAM_EN,
 DATA_BUS,
 ADDRESS_BUS,
 OUTPUT_BUS
@@ -15,6 +17,8 @@ parameter ADDRESS_WIDTH = 16;
 output reg HALT;
 output reg CLK;
 output reg RESET;
+output reg RAM_RW;
+output reg RAM_EN;
 output reg [15:0] DATA_BUS;
 output reg [15:0] ADDRESS_BUS;
 input  wire [15:0] OUTPUT_BUS;
@@ -23,10 +27,14 @@ initial begin
     CLK = 1'b0;
     RESET = 1'b0;
     HALT = 1'b1;
+    RAM_EN = 1'b0;
+    RAM_RW = 1'b0; // write ram
     ADDRESS_BUS = {ADDRESS_WIDTH{1'b0}};
     // load in data values
 #CLK_PERIOD
     RESET = 1'b1;
+    RAM_EN = 1'b1;
+    RAM_RW = 1'b0; // write ram
     ADDRESS_BUS = 16'h0010;
     DATA_BUS = 16'd0;
 #CLK_PERIOD

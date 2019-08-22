@@ -3,10 +3,12 @@
 module bat_amateur (
 	inout wire [15:0] DATA,
 	input wire [15:0] ADDRESS,
-	input wire RW, RAM_EN, HALT, CLK, RST,
+	input wire RAM_RW, RAM_EN, HALT, CLK, RST,
 	output wire [15:0] OUT
 );
 
+wire FORCE_RAM_RW;
+wire FORCE_RAM_EN;
 wire [15:0] BUS;
 wire [23:0] REGS;
 wire [7:0]  ALU_REG;
@@ -17,6 +19,7 @@ wire [15:0] ALU_IN1, ALU_IN2;
 
 BatAmateurController CTRL(
     .CLK(!CLK & !HALT), 
+    .ALU_REG(ALU_REG),
     .RST(RST), 
     .INSTR(INSTR), 
     .PC(CTRL_REGS[2:0]), 
@@ -33,8 +36,8 @@ alu ALU(
     .in_2(ALU_IN2), 
     .select(ALU_CTRL[3:1]), 
     .enable(ALU_CTRL[0]), 
-    .bus(BUS), 
     .carry_in(1'b0),
+    .data(BUS), 
     .carry_out(ALU_REG[1]), 
     .zero_flag(ALU_REG[0])
 );
@@ -134,12 +137,14 @@ bidi_register_output OUTREG(
     .OUTPUT(OUT)
 );
 
+assign FORCE_RAM_RW = (HALT) ? RAM_RW : CTRL_REGS[6];
+assign FORCE_RAM_EN = (HALT) ? RAM_EN : CTRL_REGS[5];
 memory RAM(
     .address(ADDRESS), 
     .clk(CLK), 
-    .read_write(CTRL_REGS[6] | RW), 
-	.enable(CTRL_REGS[5] | RAM_EN), 
-    .reset(!RST), 
+    .read_write(FORCE_RAM_RW), 
+	.enable(FORCE_RAM_EN), 
+    .reset(RST), 
     .data(BUS)
 );
 
