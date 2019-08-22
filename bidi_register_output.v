@@ -16,11 +16,11 @@
 `timescale 1ns/1ns
 
 module bidi_register_output (
-RESET,   // syncronous reset
+RESET,   // syncronous reset (active low)
 CLOCK,   // clock
-RW,      // low for read, high for write
-ENABLE,  // enable bus access
-COUNT,   // if high, the register will incriment
+RW,      // high for read, low for write
+ENABLE,  // enable bus access (active high)
+COUNT,   // incriment register (active high)
 
 DATA,     // data bus connection
 OUTPUT    // wire that constantly outputs register contents
@@ -41,7 +41,7 @@ output wire [BUS_WIDTH-1:0] OUTPUT;
 reg [BUS_WIDTH-1:0] INTERNAL_DATA;
 
 always @(posedge CLOCK) begin
-    if (RESET) begin
+    if (!RESET) begin
         // set the internal bus to 0
         INTERNAL_DATA <= {BUS_WIDTH{1'b0}};
     end

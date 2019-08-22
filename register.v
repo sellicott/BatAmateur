@@ -16,11 +16,11 @@
 `timescale 1ns/1ns
 
 module register (
-RESET,   // syncronous reset
+RESET,   // syncronous reset (active low)
 CLOCK,   // clock
-LOAD,    // low for read, high for write
-ENABLE,  // enable bus access
-COUNT,   // if high, the register will incriment
+LOAD,    // high for read, low for write
+ENABLE,  // enable output bus (active high)
+COUNT,   // incriment register (active high)
 
 DATA_IN, // data bus connection
 DATA_OUT // data bus connection
@@ -41,7 +41,7 @@ output reg  [BUS_WIDTH-1:0] DATA_OUT;
 reg [BUS_WIDTH-1:0] INTERNAL_DATA;
 
 always @(posedge CLOCK) begin
-    if (RESET) begin
+    if (!RESET) begin
         // set the internal bus to 0
         INTERNAL_DATA <= {BUS_WIDTH{1'b0}};
     end

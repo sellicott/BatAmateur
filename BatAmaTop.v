@@ -34,6 +34,7 @@ alu ALU(
     .select(ALU_CTRL[3:1]), 
     .enable(ALU_CTRL[0]), 
     .bus(BUS), 
+    .carry_in(1'b0)
     .carry_out(ALU_REG[1]), 
     .zero_flag(ALU_REG[0])
 );
@@ -45,7 +46,8 @@ MAR_REG (
     .LOAD(CTRL_REGS[4]), 
     .ENABLE(CTRL_REGS[3] & !HALT),
     .DATA_IN(BUS), 
-    .DATA_OUT(ADDRESS)
+    .DATA_OUT(ADDRESS),
+    .COUNT(1'b0)
 );
 
 bidi_register_output A_REG(
@@ -149,5 +151,7 @@ IR_REG(
     .ENABLE(CTRL_REG[7]),
     .DATA_IN(BUS), 
     .DATA_OUT(BUS), 
-    .INSTRUCTION_OUT(INSTR)
+    .INSTRUCTION_OUT(INSTR),
+    .COUNT(1'b0)
+
 );

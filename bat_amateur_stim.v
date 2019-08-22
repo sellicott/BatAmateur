@@ -21,12 +21,12 @@ input  wire [15:0] OUTPUT_BUS;
 
 initial begin
     CLK = 1'b0;
-    RESET = 1'b1;
+    RESET = 1'b0;
     HALT = 1'b1;
     ADDRESS_BUS = {ADDRESS_WIDTH{1'b0}};
     // load in data values
 #CLK_PERIOD
-    RESET = 1'b0;
+    RESET = 1'b1;
     ADDRESS_BUS = 16'h0010;
     DATA_BUS = 16'd0;
 #CLK_PERIOD

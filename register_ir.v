@@ -16,15 +16,15 @@
 `timescale 1ns/1ns
 
 module register_ir (
-RESET,   // syncronous reset
+RESET,   // syncronous reset (active low)
 CLOCK,   // clock
-LOAD,    // low for read, high for write
-ENABLE,  // enable bus access
-COUNT,   // if high, the register will incriment
+LOAD,    // high for read, low for write
+ENABLE,  // enable bus access (active high)
+COUNT,   // incriment register (active high)
 
-DATA_IN, // data bus connection
-DATA_OUT, // data bus connection
-INSTRUCTION_OUT
+DATA_IN,        // data bus connection
+DATA_OUT,       // data bus connection
+INSTRUCTION_OUT // direct access to the internal register value
 );
 // PARAMETERS
 parameter BUS_WIDTH = 16;
@@ -43,7 +43,7 @@ output wire [BUS_WIDTH-1:0] INSTRUCTION_OUT;
 reg [BUS_WIDTH-1:0] INTERNAL_DATA;
 
 always @(posedge CLOCK) begin
-    if (RESET) begin
+    if (!RESET) begin
         // set the internal bus to 0
         INTERNAL_DATA <= {BUS_WIDTH{1'b0}};
     end
