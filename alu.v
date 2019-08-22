@@ -1,7 +1,7 @@
 module alu
 (
    input wire [15:0] in_1, in_2,   // inputs for the calculation
-   input wire [2:0] select,        // selects which operation
+   input wire [3:0] select,        // selects which operation
    input wire enable,              // enables bus access
    input wire carry_in,            // carry in flag
    output wire [15:0] data,        // connection to the bus
