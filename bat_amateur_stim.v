@@ -100,6 +100,8 @@ initial begin
 #CLK_PERIOD
   ADDRESS_BUS = {16{1'bz}};
   DATA_BUS = {16{1'bz}};
+  RAM_EN = 1'b0;
+  RAM_RW = 1'b1;
   HALT = 1'b0;
 end 
 
