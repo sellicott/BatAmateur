@@ -1,6 +1,6 @@
 `timescale 1ns/1ns
 
-module BatAmateurv2(
+module bat_amateur (
 	inout wire [15:0] DATA,
 	input wire [15:0] ADDRESS,
 	input wire RW, RAM_EN, HALT, CLK, RST,
