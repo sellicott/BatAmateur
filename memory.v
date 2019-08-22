@@ -46,8 +46,7 @@ begin
             if (read_write) 
             begin
                mdr = memory_registers[address];    
-            end else
-            begin 
+            end else begin 
                mdr = data;
                memory_registers[address] = mdr; 
             end
