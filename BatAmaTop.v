@@ -3,7 +3,7 @@
 module bat_amateur (
 	inout wire [15:0] DATA,
 	input wire [15:0] ADDRESS,
-	input wire RAM_RW, RAM_EN, HALT, CLK, RST,
+	input wire EXT_RAM_RW, EXT_RAM_EN, HALT, CLK, RST,
 	output wire [15:0] OUT
 );
 
@@ -171,8 +171,8 @@ bidi_register_output OUTREG(
     .OUTPUT(OUT)
 );
 
-assign FORCE_RAM_RW = (HALT) ? RAM_RW : RAM_RW;
-assign FORCE_RAM_EN = (HALT) ? RAM_EN : RAM_EN;
+assign FORCE_RAM_RW = (HALT) ? EXT_RAM_RW : RAM_RW;
+assign FORCE_RAM_EN = (HALT) ? EXT_RAM_EN : RAM_EN;
 memory RAM(
     .address(ADDRESS), 
     .clk(CLK), 
