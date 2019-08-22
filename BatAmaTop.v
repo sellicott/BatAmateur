@@ -20,7 +20,7 @@ BatAmateurController CTRL(
     .RST(RST), 
     .INSTR(INSTR), 
     .PC(CTRL_REGS[2:0]), 
-    .MAR(CTRL_REGS[4:3], 
+    .MAR(CTRL_REGS[4:3]), 
     .RAM(CTRL_REGS[6:5]), 
     .IR(CTRL_REGS[8:7]), 
     .REGS(REGS), 
@@ -34,7 +34,7 @@ alu ALU(
     .select(ALU_CTRL[3:1]), 
     .enable(ALU_CTRL[0]), 
     .bus(BUS), 
-    .carry_in(1'b0)
+    .carry_in(1'b0),
     .carry_out(ALU_REG[1]), 
     .zero_flag(ALU_REG[0])
 );
@@ -147,11 +147,12 @@ register_ir #(.COUNT_EN(0))
 IR_REG(
     .RESET(RST), 
     .CLOCK(CLK), 
-    .LOAD(CTRL_REG[8]), 
-    .ENABLE(CTRL_REG[7]),
+    .LOAD(CTRL_REGS[8]), 
+    .ENABLE(CTRL_REGS[7]),
     .DATA_IN(BUS), 
     .DATA_OUT(BUS), 
     .INSTRUCTION_OUT(INSTR),
     .COUNT(1'b0)
 
 );
+endmodule
