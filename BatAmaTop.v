@@ -3,7 +3,7 @@
 module BatAmateurv2(
 	inout wire [15:0] DATA,
 	input wire [15:0] ADDRESS,
-	input wire R/W, RAM_EN, HALT, CLK, RST,
+	input wire RW, RAM_EN, HALT, CLK, RST,
 	output wire [15:0] OUT
 );
 
