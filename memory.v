@@ -33,7 +33,7 @@ always @ (posedge clk or reset)
 begin 
     if (reset == 1'b0)
     begin
-        mdr <= {16{1'b0}};
+        data_out <= {16{1'bz}};
 
         for (k = 0; k < memory_size; k = k + 1)
         begin 
