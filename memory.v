@@ -26,17 +26,17 @@ reg [15:0] memory_registers [memory_size-1:0];
 reg [15:0] mdr;
 integer k;
 
-assign data  = (enable && read_write) ? mdr : 16'bz; 
+assign data <= (enable && read_write) ? mdr : 16'bz; 
 
 always @ (posedge clk or reset)
 begin 
-    if (!reset)
+    if (reset == 1'b0)
     begin
-        mdr = 0;
+        mdr <= {16{1'b0}};
 
         for (k = 0; k < memory_size; k = k + 1)
         begin 
-            memory_registers[k] = 0;
+            memory_registers[k] <= {16{1'b0}};
         end
     end
     else
@@ -45,10 +45,9 @@ begin
         begin 
             if (read_write) 
             begin
-               mdr = memory_registers[address];    
+               mdr <= memory_registers[address];    
             end else begin 
-               mdr = data;
-               memory_registers[address] = mdr; 
+               memory_registers[address] <= data; 
             end
         end     
     end
