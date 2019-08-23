@@ -4,10 +4,10 @@ module memory_bidi
 (
     reset,      // reset memory to zero
     clk,        // clock
-    read_write,       // high for reading low for writing 
+    read_write, // high for reading low for writing 
     enable,     // must be high to access the memory 
     address,    // address of the memory to be accessed
-    data,    // bi-dir connection to the data register
+    data        // bi-dir connection to the data register
 );
 
 // constants
