@@ -42,7 +42,7 @@ initial begin
     RW = 1'b1; // read
     ENABLE = 1'b1;
     COUNT = 1'b0;
-    $display(DATA_IN)
+    $display(DATA_IN);
 
 #10 
     // incriment the data
@@ -50,7 +50,7 @@ initial begin
     RW = 1'b1; // read
     ENABLE = 1'b1;
     COUNT = 1'b1;
-    $display(DATA_IN)
+    $display(DATA_IN);
 
 end
 

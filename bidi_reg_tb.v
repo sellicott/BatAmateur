@@ -13,7 +13,7 @@ bidi_reg_stim my_stim
 (
     .RESET(RESET),
     .CLOCK(CLOCK),
-    .RW(RW);
+    .RW(RW),
     .ENABLE(ENABLE),
     .COUNT(COUNT),
     .DATA_OUT(DATA),
@@ -24,10 +24,10 @@ bidi_register my_register
 (
     .RESET(RESET),
     .CLOCK(CLOCK),
-    .RW(RW);
+    .RW(RW),
     .ENABLE(ENABLE),
     .COUNT(COUNT),
-    .DATA(DATA),
+    .DATA(DATA)
 );
 
 endmodule
