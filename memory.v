@@ -26,7 +26,7 @@ reg [15:0] memory_registers [memory_size-1:0];
 reg [15:0] mdr;
 integer k;
 
-assign data  = (enable && read_write) ? mdr : 'bz; 
+assign data  = (enable && read_write) ? mdr : 16'bz; 
 
 always @ (posedge clk or reset)
 begin 
