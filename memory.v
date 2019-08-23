@@ -6,6 +6,7 @@ module memory
     clk,        // clock
     read_write, // high for reading low for writing 
     enable,     // must be high to access the memory 
+    output_en,  // output enable
     reset,      // reset memory to zero
     data        // bi-dir connection to the data register
 );
@@ -16,7 +17,7 @@ parameter memory_size = 2 ** address_size;
 
 // inputs
 input wire [address_size-1:0] address;                 
-input wire clk, read_write, enable, reset;
+input wire clk, read_write, enable, reset, output_en;
 
 // output
 inout wire [15:0] data;
@@ -26,7 +27,7 @@ reg [15:0] memory_registers [memory_size-1:0];
 reg [15:0] mdr;
 integer k;
 
-assign data <= (enable && read_write) ? mdr : 16'bz; 
+assign data <= (enable && read_write && output_en) ? mdr : 16'bz; 
 
 always @ (posedge clk or reset)
 begin 
@@ -43,7 +44,7 @@ begin
     begin
         if (enable) 
         begin 
-            if (read_write) 
+            if (read_write && output_en) 
             begin
                mdr <= memory_registers[address];    
             end else begin 
