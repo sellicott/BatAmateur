@@ -26,10 +26,8 @@ output reg [15:0] data_out;
 
 // internal
 reg [15:0] memory_registers [memory_size-1:0];
-reg [15:0] mdr;
 integer k;
 
-assign data_out = (enable && read_write && output_en) ? mdr : 16'bz; 
 
 always @ (posedge clk or reset)
 begin 
@@ -46,9 +44,9 @@ begin
     begin
         if (enable) 
         begin 
-            if (read_write && output_en) 
+            if (read_write) 
             begin
-               mdr <= memory_registers[address];    
+               data_out <= (output_en) ? memory_registers[address] : {16{1'bz}};    
             end else begin 
                memory_registers[address] <= data_in; 
             end
