@@ -130,7 +130,6 @@ bidi_register FOUR(
     .RW(REGS_RW[3]), 
     .ENABLE(REGS_EN[3]), 
     .COUNT(REGS_INC[3]),
-    .DATA(OTHER_BUS)
     .DATA(BUS)
 );
 
@@ -140,7 +139,6 @@ bidi_register FIVE(
     .RW(REGS_RW[4]), 
     .ENABLE(REGS_EN[4]), 
     .COUNT(REGS_INC[4]),
-    .DATA(OTHER_BUS)
     .DATA(BUS)
 );
 
@@ -150,7 +148,6 @@ bidi_register SIX(
     .RW(REGS_RW[5]), 
     .ENABLE(REGS_EN[5]), 
     .COUNT(REGS_INC[5]),
-    .DATA(OTHER_BUS)
     .DATA(BUS)
 );
 
@@ -160,7 +157,6 @@ bidi_register SEVEN(
     .RW(REGS_RW[6]), 
     .ENABLE(REGS_EN[6]), 
     .COUNT(REGS_INC[6]),
-    .DATA(OTHER_BUS)
     .DATA(BUS)
 );
 
