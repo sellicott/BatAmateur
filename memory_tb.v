@@ -30,7 +30,8 @@ memory my_memory
     .enable(enable),
     .output_en(output_en),
     .reset(reset),
-    .data(data)
+    .data_in(data),
+    .data_out(data)
 );
 
 endmodule
