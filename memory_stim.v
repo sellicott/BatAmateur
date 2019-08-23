@@ -12,6 +12,7 @@ module memory_stim (
 
 output reg address;
 output reg clk;
+output reg read_write;
 output reg enable;
 output reg reset;
 output reg data_out;
