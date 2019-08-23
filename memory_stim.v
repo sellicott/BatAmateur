@@ -10,7 +10,7 @@ module memory_stim (
     data_out
 );
 
-output reg address;
+output reg [15:0] address;
 output reg clk;
 output reg read_write;
 output reg enable;
@@ -20,11 +20,11 @@ input wire [15:0] data_in;
 
 
 initial begin
-    clk <= 0'b0;
-    reset <= 0'b0;
-    enable <= 0'b0;
-    read_write <= 0'b1;
-    address <= 16'h0000;
+    clk = 0'b0;
+    reset = 0'b0;
+    enable = 0'b0;
+    read_write = 0'b1;
+    address = 16'h0000;
 #10
     address = 16'h0000;
     read_write = 0'b0;
