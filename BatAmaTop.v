@@ -173,12 +173,12 @@ bidi_register_output OUTREG(
 
 assign FORCE_RAM_RW = (HALT) ? EXT_RAM_RW : RAM_RW;
 assign FORCE_RAM_EN = (HALT) ? EXT_RAM_EN : RAM_EN;
-memory RAM(
-    .address(ADDRESS), 
+memory_bidi RAM(
+    .reset(RST), 
     .clk(CLK), 
     .read_write(FORCE_RAM_RW), 
 	.enable(FORCE_RAM_EN), 
-    .reset(RST), 
+    .address(ADDRESS), 
     .data(BUS)
 );
 endmodule
