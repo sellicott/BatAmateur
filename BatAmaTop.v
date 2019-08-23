@@ -9,7 +9,6 @@ module bat_amateur (
 
 wire FORCE_RAM_RW;
 wire FORCE_RAM_EN;
-wire [15:0] OTHER_BUS;
 wire [7:0]  ALU_REG;
 wire [15:0] INSTR;
 wire [15:0] ALU_IN1, ALU_IN2;
@@ -102,7 +101,7 @@ bidi_register_output A_REG(
     .RW(REGS_RW[0]), 
     .ENABLE(REGS_EN[0]), 
     .COUNT(REGS_INC[0]),
-    .DATA(OTHER_BUS), 
+    .DATA(BUS), 
     .OUTPUT(ALU_IN1)
 );
 
@@ -112,7 +111,7 @@ bidi_register_output B_REG(
     .RW(REGS_RW[1]), 
     .ENABLE(REGS_EN[1]), 
     .COUNT(REGS_INC[1]),
-    .DATA(OTHER_BUS), 
+    .DATA(BUS), 
     .OUTPUT(ALU_IN2)
 );
 
@@ -122,7 +121,7 @@ bidi_register THREE(
     .RW(REGS_RW[2]), 
     .ENABLE(REGS_EN[2]), 
     .COUNT(REGS_INC[2]),
-    .DATA(OTHER_BUS)
+    .DATA(BUS)
 );
 
 bidi_register FOUR(
@@ -132,6 +131,7 @@ bidi_register FOUR(
     .ENABLE(REGS_EN[3]), 
     .COUNT(REGS_INC[3]),
     .DATA(OTHER_BUS)
+    .DATA(BUS)
 );
 
 bidi_register FIVE(
@@ -141,6 +141,7 @@ bidi_register FIVE(
     .ENABLE(REGS_EN[4]), 
     .COUNT(REGS_INC[4]),
     .DATA(OTHER_BUS)
+    .DATA(BUS)
 );
 
 bidi_register SIX(
@@ -150,6 +151,7 @@ bidi_register SIX(
     .ENABLE(REGS_EN[5]), 
     .COUNT(REGS_INC[5]),
     .DATA(OTHER_BUS)
+    .DATA(BUS)
 );
 
 bidi_register SEVEN(
@@ -159,6 +161,7 @@ bidi_register SEVEN(
     .ENABLE(REGS_EN[6]), 
     .COUNT(REGS_INC[6]),
     .DATA(OTHER_BUS)
+    .DATA(BUS)
 );
 
 bidi_register_output OUTREG(
@@ -168,7 +171,7 @@ bidi_register_output OUTREG(
     .ENABLE(REGS_EN[7]), 
     .COUNT(REGS_INC[7]),
     .DATA(BUS), 
-    .OUTPUT(OTHER_OUT)
+    .OUTPUT(OUT)
 );
 
 assign FORCE_RAM_RW = (HALT) ? EXT_RAM_RW : RAM_RW;
