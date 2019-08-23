@@ -43,18 +43,15 @@ initial begin
     address = 16'h0000;
     load = 1'b0;
     out_en = 1'b0;
-    output_en = 1'b0;
 #10
     address = 16'h0000;
     load = 1'b0;
     out_en = 1'b1;
-    output_en = 1'b1;
 
 #10
     address = 16'h0010;
     load = 1'b0;
     out_en = 1'b1;
-    output_en = 1'b1;
 end
 
 always #5 clk <= ~clk;
