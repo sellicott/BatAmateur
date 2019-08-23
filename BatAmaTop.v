@@ -58,7 +58,7 @@ alu ALU(
     .select(ALU_OP[3:0]), 
     .enable(ALU_EN), 
     .carry_in(1'b0),
-    .data(OTHER_BUS), 
+    .data(BUS), 
     .carry_out(ALU_REG[1]), 
     .zero_flag(ALU_REG[0])
 );
