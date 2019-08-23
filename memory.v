@@ -5,7 +5,7 @@ module memory
     address,    // address of the memory to be accessed
     clk,        // clock
     load,       // high for reading low for writing 
-    enable,     // must be high to access the memory 
+    out_en,     // must be high to access the memory 
     reset,      // reset memory to zero
     data_in,    // bi-dir connection to the data register
     data_out
@@ -17,7 +17,7 @@ parameter memory_size = 2 ** address_size;
 
 // inputs
 input wire [address_size-1:0] address;                 
-input wire clk, load, enable, reset;
+input wire clk, load, out_en, reset;
 input wire [15:0] data_in;
 
 // output
@@ -41,7 +41,7 @@ begin
     end
     else
     begin
-        if (enable) 
+        if (out_en) 
         begin 
             data_out <= memory_registers[address];
         end     

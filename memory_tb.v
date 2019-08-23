@@ -5,8 +5,7 @@ module memory_tb ();
 wire [15:0] address;
 wire clk;
 wire load;
-wire enable;
-wire output_en;
+wire out_en;
 wire reset;
 wire [15:0] data;
 
@@ -15,8 +14,7 @@ memory_stim my_stim
     .address(address),
     .clk(clk),
     .load(load),
-    .enable(enable),
-    .output_en(output_en),
+    .out_en(out_en),
     .reset(reset),
     .data_in(data),
     .data_out(data)
@@ -27,7 +25,7 @@ memory my_memory
     .address(address),
     .clk(clk),
     .load(load),
-    .enable(enable),
+    .out_en(out_en),
     .reset(reset),
     .data_in(data),
     .data_out(data)
