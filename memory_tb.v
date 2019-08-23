@@ -28,7 +28,6 @@ memory my_memory
     .clk(clk),
     .load(load),
     .enable(enable),
-    .output_en(output_en),
     .reset(reset),
     .data_in(data),
     .data_out(data)
