@@ -45,6 +45,12 @@ initial begin
     address = 16'h0000;
     read_write = 1'b1;
     enable = 1'b1;
+    output_en = 1'b0;
+#10
+    data_out = 16'hzzzz;
+    address = 16'h0000;
+    read_write = 1'b1;
+    enable = 1'b1;
     output_en = 1'b1;
 
 #10

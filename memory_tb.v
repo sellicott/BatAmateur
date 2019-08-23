@@ -16,7 +16,7 @@ memory_stim my_stim
     .clk(clk),
     .read_write(read_write),
     .enable(enable),
-    .output_en(output_en)
+    .output_en(output_en),
     .reset(reset),
     .data_in(data),
     .data_out(data)
@@ -28,7 +28,7 @@ memory my_memory
     .clk(clk),
     .read_write(read_write),
     .enable(enable),
-    .output_en(output_en)
+    .output_en(output_en),
     .reset(reset),
     .data(data)
 );
