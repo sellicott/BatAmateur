@@ -4,7 +4,7 @@ module memory_tb ();
 
 wire [15:0] address;
 wire clk;
-wire read_write;
+wire load;
 wire enable;
 wire output_en;
 wire reset;
@@ -14,7 +14,7 @@ memory_stim my_stim
 (
     .address(address),
     .clk(clk),
-    .load(read_write),
+    .load(load),
     .enable(enable),
     .output_en(output_en),
     .reset(reset),
@@ -26,7 +26,7 @@ memory my_memory
 (
     .address(address),
     .clk(clk),
-    .load(read_write),
+    .load(load),
     .enable(enable),
     .output_en(output_en),
     .reset(reset),

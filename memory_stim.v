@@ -3,7 +3,7 @@
 module memory_stim (
     address,
     clk,
-    read_write,
+    load,
     enable,
     output_en,
     reset,
@@ -26,37 +26,37 @@ initial begin
     reset = 1'b0;
     enable = 1'b0;
     output_en = 1'b0;
-    read_write = 1'b1;
+    load = 1'b1;
     address = 16'h0000;
 #10
     reset = 1'b1;
     address = 16'h0000;
-    read_write = 1'b0;
+    load = 1'b1;
     enable = 1'b1;
     data_out = 16'h5A5A;
 
 #10
     address = 16'h0010;
-    read_write = 1'b0;
+    load = 1'b1;
     enable = 1'b1;
     data_out = 16'hA5A5;
 // read data
 #10
     data_out = 16'hzzzz;
     address = 16'h0000;
-    read_write = 1'b1;
+    load = 1'b0;
     enable = 1'b1;
     output_en = 1'b0;
 #10
     data_out = 16'hzzzz;
     address = 16'h0000;
-    read_write = 1'b1;
+    load = 1'b0;
     enable = 1'b1;
     output_en = 1'b1;
 
 #10
     address = 16'h0010;
-    read_write = 0'b1;
+    load = 1'b0;
     enable = 1'b1;
     output_en = 1'b1;
 end
