@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 
 module bat_amateur (
-	inout wire [15:0] DATA,
+	inout wire [15:0] BUS,
 	input wire [15:0] ADDRESS,
 	input wire EXT_RAM_RW, EXT_RAM_EN, HALT, CLK, RST,
 	output wire [15:0] OUT
@@ -9,7 +9,7 @@ module bat_amateur (
 
 wire FORCE_RAM_RW;
 wire FORCE_RAM_EN;
-wire [15:0] BUS;
+wire [15:0] OTHER_BUS;
 wire [7:0]  ALU_REG;
 wire [15:0] INSTR;
 wire [15:0] ALU_IN1, ALU_IN2;
@@ -59,7 +59,7 @@ alu ALU(
     .select(ALU_OP[3:0]), 
     .enable(ALU_EN), 
     .carry_in(1'b0),
-    .data(BUS), 
+    .data(OTHER_BUS), 
     .carry_out(ALU_REG[1]), 
     .zero_flag(ALU_REG[0])
 );
@@ -102,7 +102,7 @@ bidi_register_output A_REG(
     .RW(REGS_RW[0]), 
     .ENABLE(REGS_EN[0]), 
     .COUNT(REGS_INC[0]),
-    .DATA(BUS), 
+    .DATA(OTHER_BUS), 
     .OUTPUT(ALU_IN1)
 );
 
@@ -112,7 +112,7 @@ bidi_register_output B_REG(
     .RW(REGS_RW[1]), 
     .ENABLE(REGS_EN[1]), 
     .COUNT(REGS_INC[1]),
-    .DATA(BUS), 
+    .DATA(OTHER_BUS), 
     .OUTPUT(ALU_IN2)
 );
 
@@ -122,7 +122,7 @@ bidi_register THREE(
     .RW(REGS_RW[2]), 
     .ENABLE(REGS_EN[2]), 
     .COUNT(REGS_INC[2]),
-    .DATA(BUS)
+    .DATA(OTHER_BUS)
 );
 
 bidi_register FOUR(
@@ -131,7 +131,7 @@ bidi_register FOUR(
     .RW(REGS_RW[3]), 
     .ENABLE(REGS_EN[3]), 
     .COUNT(REGS_INC[3]),
-    .DATA(BUS)
+    .DATA(OTHER_BUS)
 );
 
 bidi_register FIVE(
@@ -140,7 +140,7 @@ bidi_register FIVE(
     .RW(REGS_RW[4]), 
     .ENABLE(REGS_EN[4]), 
     .COUNT(REGS_INC[4]),
-    .DATA(BUS)
+    .DATA(OTHER_BUS)
 );
 
 bidi_register SIX(
@@ -149,7 +149,7 @@ bidi_register SIX(
     .RW(REGS_RW[5]), 
     .ENABLE(REGS_EN[5]), 
     .COUNT(REGS_INC[5]),
-    .DATA(BUS)
+    .DATA(OTHER_BUS)
 );
 
 bidi_register SEVEN(
@@ -158,7 +158,7 @@ bidi_register SEVEN(
     .RW(REGS_RW[6]), 
     .ENABLE(REGS_EN[6]), 
     .COUNT(REGS_INC[6]),
-    .DATA(BUS)
+    .DATA(OTHER_BUS)
 );
 
 bidi_register_output OUTREG(
@@ -168,7 +168,7 @@ bidi_register_output OUTREG(
     .ENABLE(REGS_EN[7]), 
     .COUNT(REGS_INC[7]),
     .DATA(BUS), 
-    .OUTPUT(OUT)
+    .OUTPUT(OTHER_OUT)
 );
 
 assign FORCE_RAM_RW = (HALT) ? EXT_RAM_RW : RAM_RW;
