@@ -14,7 +14,7 @@ memory_stim my_stim
 (
     .address(address),
     .clk(clk),
-    .read_write(read_write),
+    .load(read_write),
     .enable(enable),
     .output_en(output_en),
     .reset(reset),
@@ -26,7 +26,7 @@ memory my_memory
 (
     .address(address),
     .clk(clk),
-    .read_write(read_write),
+    .load(read_write),
     .enable(enable),
     .output_en(output_en),
     .reset(reset),

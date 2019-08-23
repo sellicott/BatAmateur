@@ -29,6 +29,7 @@ initial begin
     read_write = 1'b1;
     address = 16'h0000;
 #10
+    reset = 1'b1;
     address = 16'h0000;
     read_write = 1'b0;
     enable = 1'b1;
