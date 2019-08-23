@@ -15,8 +15,8 @@ output reg clk;
 output reg read_write;
 output reg enable;
 output reg reset;
-output reg data_out;
-input wire data_in;
+output reg [15:0] data_out;
+input wire [15:0] data_in;
 
 
 initial begin
@@ -26,25 +26,25 @@ initial begin
     read_write <= 0'b1;
     address <= 16'h0000;
 #10
-    address <= 16'h0000;
+    address = 16'h0000;
     read_write = 0'b0;
     enable = 1'b1;
     data_out = 16'h5A5A;
 
 #10
-    address <= 16'h0010;
+    address = 16'h0010;
     read_write = 0'b0;
     enable = 1'b1;
     data_out = 16'hA5A5;
 // read data
 #10
     data_out = 16'hzzzz;
-    address <= 16'h0000;
+    address = 16'h0000;
     read_write = 0'b1;
     enable = 1'b1;
 
 #10
-    address <= 16'h0010;
+    address = 16'h0010;
     read_write = 0'b1;
     enable = 1'b1;
 end
