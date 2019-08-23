@@ -33,7 +33,7 @@ module BatAmateurController(
 
 reg [2:0] uOP;
 
-always @(negedge CLK) //negedge to avoid causing race conditions
+always @(posedge CLK) //negedge to avoid causing race conditions
 begin
 	//increment the uOP
 	//reset state for uOP is 3, then
@@ -50,7 +50,7 @@ begin
 	RAM_RW = 1'b1;
 	RAM_EN = 1'b0;
 
-	IR_LOAD = 1'b1;
+	IR_LOAD = 1'b0;
 	IR_EN = 1'b0;
 
 	REGS_INC = 8'h00;
@@ -83,8 +83,6 @@ begin
 			PC_INC <= 1'b1;
 			PC_RW <= 1'b0;
 			PC_EN <= 1'b0;
-
-			MAR_LOAD <= 1'b0;
 
 			RAM_RW <= 1'b1;
 			RAM_EN <= 1'b1;
