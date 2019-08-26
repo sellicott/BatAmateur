@@ -108,6 +108,7 @@ begin
           $display("MOV instruction");
 					//r1 enable
 					REGS_EN[INSTR[5:3]] <= 1'b1;
+					REGS_RW[INSTR[5:3]] <= 1'b0;
 					//r2 enable and read out
 					REGS_EN[INSTR[2:0]] <= 1'b1;
 					REGS_RW[INSTR[2:0]] <= 1'b1;
