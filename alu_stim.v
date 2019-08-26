@@ -25,7 +25,7 @@ begin
     enable = 0;
     #T
 
-    if ((data == 16'bz) && (carry_out == 1'bz) && (zero_flag == 1'bz))
+    if (data == 16'bz)
     begin
         $display("test 1 passed");
     end else
