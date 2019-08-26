@@ -50,7 +50,7 @@ always @(posedge CLOCK) begin
     else if (ENABLE && RW == 0) begin
         INTERNAL_DATA <= DATA;
     end 
-    else if (COUNT_EN && RW != 0 && COUNT) begin
+    else if ((!ENABLE || ENABLE && !RW) && COUNT_EN && COUNT) begin
         INTERNAL_DATA <= INTERNAL_DATA + 1;
     end
 end
