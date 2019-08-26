@@ -73,7 +73,7 @@ initial begin
 // B <- R2 + B 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0006;
-    DATA_BUS = 16'h7F51;
+    DATA_BUS = 16'h7051;
 // MOV A <- R2 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0007;
@@ -101,7 +101,7 @@ initial begin
 // JNZ 0x0006
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000D;
-    DATA_BUS = 16'h5006;
+    DATA_BUS = 16'h6006;
 // JMP 0x000E 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000E;
