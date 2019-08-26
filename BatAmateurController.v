@@ -138,6 +138,7 @@ begin
 			begin
 				// NOP instruction
 				uOP <= 3'b111;
+				$display("NOP instruction");
 			end
 			else
 			begin
@@ -146,6 +147,7 @@ begin
 				// direct jump instruction
 				if(INSTR[15] == 1'b0 && INSTR[14]==1'b1) 
 				begin
+					$display("JMP instruction");
 					//00 is uncond, 01 is z = 1, 10 is z = 0, 11 is unregistered
 					//i guess 11 is unconditional unjump lmao
 					if ( 
@@ -170,6 +172,7 @@ begin
 					uOP <= 3'b111;
 				end
 				else begin
+					$display("STORE or LOAD instruction");
 					// write addr to mar 
 					// we can use it for direct or indirect addressing
 					IR_LOAD <= 1'b0;
@@ -201,6 +204,7 @@ begin
 					//indirect JMP set of instructions
 					if(INSTR[14]==1'b1) 
 					begin
+						$display("JMP instruction");
 						//00 is uncond, 01 is z = 1, 10 is z = 0, 11 is unregistered
 						//i guess 11 is unconditional unjump lmao
 						if ( 
@@ -234,6 +238,7 @@ begin
 				// store instruction
 				else if (INSTR[13] == 1'b1)
 				begin
+					$display("STORE instruction");
 					// store A
 					if (INSTR[12] == 1'b0) begin
 						REGS_EN[0] <= 1'b1;
@@ -252,6 +257,7 @@ begin
 				// load instruction
 				else 
 				begin
+					$display("LOAD instruction");
 					// load A
 					if (INSTR[12] == 1'b0) begin
 						REGS_EN[0] <= 1'b1;
