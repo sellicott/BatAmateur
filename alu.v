@@ -1,3 +1,5 @@
+`timescale 1ns/1ns
+
 module alu
 (
    input wire [15:0] in_1, in_2,   // inputs for the calculation
@@ -15,8 +17,10 @@ parameter carry_bit = 16; // carry out bit of the resulting operation
 reg [16:0] result;
 
 // save the carry out bit 
-assign carry_out = (enable) ? result[carry_bit] : 1'bz;
-assign zero_flag = (enable) ? result == 16'h0 : 1'bz;
+assign carry_out = (!enable) ? 1'bz : result[carry_bit];
+assign zero_flag = (!enable)         ? 1'bz   
+                 : (result[15:0] == 16'b0) ? 1'b1
+                 : 1'b0;  
 
 // connect the output to the bus if enabled
 assign data = (enable) ? result[15:0] : 16'bz;
