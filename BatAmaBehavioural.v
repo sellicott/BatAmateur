@@ -5,24 +5,20 @@
 //if three, it's inc, then  r/w, then en
 
 module BatAmateurController(
-	input wire CLK, RST,
-	input wire [7:0] ALU_REG,
-	input wire [15:0] INSTR,
-
-	output reg [2:0] PC,
-	output reg [1:0] MAR,
-	output reg [1:0] RAM,
-	output reg [1:0] IR,
-	//A, B, 3, 4, 5, 6, 7, OUT (from small to big)
-	output reg [23:0] REGS,
-	output reg ALU_EN,
-	output reg [4:0] ALU_OP
+	input wire [15:0] DATA,
+	input wire [15:0] ADDRESS,
+	input wire EXT_RAM_RW, EXT_RAM_EN, HALT, CLK, RST,
+	output wire [15:0] OUT
 );
 
 reg [2:0] uOP;
+	
+//all the registers
+reg [15:0] A, B, RTHREE, RFOUR, RFIVE, RSIX, RSEVEN, ROUT, MAR, PC, IR;
 
+	
 // resources for alu
-wire [15:0] alu_in_1, alu_in_2
+wire [15:0] alu_in_1, alu_in_2;
 wire [2:0] alu_select; 
 reg [16:0] alu_out;
 wire alu_enable, carry_in, carry_out, zero_flag;
