@@ -88,7 +88,6 @@ begin
 			RAM_EN <= 1'b1;
 
 			IR_LOAD <= 1'b1;
-			IR_EN <= 1'b1;
 		end
 	
 		2: //and he, upon, look'd his creation,
