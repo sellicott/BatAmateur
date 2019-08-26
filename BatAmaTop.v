@@ -28,7 +28,7 @@ wire [7:0] REGS_EN;
 BatAmateurController CTRL(
     .CLK(CLK), 
     .ALU_REG(ALU_REG),
-    .RST(RST | HALT), 
+    .RST(RST & !HALT), 
     .INSTR(INSTR), 
 
 	.PC_INC(PC_INC),
