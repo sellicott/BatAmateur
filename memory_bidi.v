@@ -19,9 +19,6 @@ input wire reset, clk, read_write, enable;
 input wire [address_size-1:0] address;                 
 inout wire [15:0] data;
 
-// output
-reg [15:0] data_out;
-
 // internal
 reg [15:0] memory_registers [memory_size-1:0];
 integer k;
@@ -40,12 +37,8 @@ begin
     else if (enable && read_write == 0) begin
         memory_registers[address] <= data;
     end
-
-    if (read_write == 1) begin
-        data_out <= memory_registers[address];
-    end
 end
 
-assign data = (enable && read_write == 1) ? data_out : {16{1'bz}};
+assign data = (enable && read_write == 1) ? memory_registers[address] : {16{1'bz}};
 
 endmodule

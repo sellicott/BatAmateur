@@ -36,7 +36,7 @@ input wire ENABLE;
 input wire COUNT;
 // OUTPUT
 input  wire [BUS_WIDTH-1:0] DATA_IN;
-output reg  [BUS_WIDTH-1:0] DATA_OUT;
+output wire [BUS_WIDTH-1:0] DATA_OUT;
 
 reg [BUS_WIDTH-1:0] INTERNAL_DATA;
 
@@ -54,14 +54,7 @@ always @(posedge CLOCK) begin
     else if (COUNT_EN && COUNT) begin
         INTERNAL_DATA <= INTERNAL_DATA + 1;
     end
-
-    // The enable signal is independent of reset and count, except for data read
-    if (ENABLE) begin
-        DATA_OUT <= INTERNAL_DATA;
-    end 
-    else begin
-        // not enabled, set the output bus to high impedence
-        DATA_OUT <= {BUS_WIDTH{1'bz}};
-    end
 end
+    // The enable signal is independent of reset and count, except for data read
+    assign DATA_OUT = ENABLE ? INTERNAL_DATA : {BUS_WIDTH{1'bz}};
 endmodule
