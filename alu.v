@@ -3,7 +3,7 @@
 module alu
 (
    input wire [15:0] in_1, in_2,   // inputs for the calculation
-   input wire [2:0] select,        // selects which operation
+   input wire [3:0] select,        // selects which operation
    input wire enable,              // enables bus access
    input wire carry_in,            // carry in flag
    output wire [15:0] data,        // connection to the bus
@@ -18,7 +18,7 @@ reg [16:0] result;
 
 // save the carry out bit 
 assign carry_out = (!enable) ? 1'bz : result[carry_bit];
-assign zero_flag = (!enable)         ? 1'bz   
+assign zero_flag = (!enable) ? 1'bz   
                  : (result[15:0] == 16'b0) ? 1'b1
                  : 1'b0;  
 
