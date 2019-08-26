@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 
 module bat_amateur (
-	inout wire [15:0] BUS,
+	input wire [15:0] DATA,
 	input wire [15:0] ADDRESS,
 	input wire EXT_RAM_RW, EXT_RAM_EN, HALT, CLK, RST,
 	output wire [15:0] OUT
@@ -12,6 +12,7 @@ wire FORCE_RAM_EN;
 wire [7:0]  ALU_REG;
 wire [15:0] INSTR;
 wire [15:0] ALU_IN1, ALU_IN2;
+wire [15:0] BUS;
 
 wire PC_INC, PC_RW, PC_EN;
 wire MAR_LOAD, MAR_EN;
@@ -180,4 +181,6 @@ memory_bidi RAM(
     .address(ADDRESS), 
     .data(BUS)
 );
+
+assign BUS = (HALT) ? DATA : {16{1'bz}};
 endmodule

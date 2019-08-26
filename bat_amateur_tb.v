@@ -12,7 +12,7 @@ wire [ADDRESS_WIDTH-1:0] ADDRESS_BUS;
 wire [15:0] OUTPUT_BUS;
 
 bat_amateur my_bat_amateur (
-    .BUS(DATA_BUS),
+    .DATA(DATA_BUS),
     .ADDRESS(ADDRESS_BUS),
     .EXT_RAM_RW(RAM_RW),
     .EXT_RAM_EN(HALT),
