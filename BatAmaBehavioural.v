@@ -21,6 +21,12 @@ module BatAmateurController(
 
 reg [2:0] uOP;
 
+// resources for alu
+wire [15:0] alu_in_1, alu_in_2
+wire [2:0] alu_select; 
+reg [16:0] alu_out;
+wire alu_enable, carry_in, carry_out, zero_flag;
+
 always @(negedge CLK) //negedge to avoid causing race conditions
 begin
 	//increment the uOP
@@ -231,6 +237,29 @@ begin
 			end
 	endcase
 	end
+end
+
+assign carry_out = (!alu_enable) ? 1'bz : alu_out[16];
+assign zero_flag = (!alu_enable) ? 1'bz   
+                 : (alu_out[15:0] == 16'b0) ? 1'b1
+                 : 1'b0;  
+
+always @(alu_in_1,alu_in_2,carry_in,alu_enable,alu_select)
+begin
+    if (alu_enable == 1)
+    begin
+        case (alu_select)
+            0: alu_out = alu_in_1 + alu_in_2 + carry_in; // addition
+            1: alu_out = alu_in_1 - alu_in_2;                     // subtraction
+            2: alu_out = alu_in_1 & alu_in_2;                     // and operator
+            3: alu_out = alu_in_1 | alu_in_2;                     // or operator
+            4: alu_out = alu_in_1 ^ alu_in_2;                     // xor operator
+            5: alu_out = ~alu_in_1;                           // inversion
+            6: alu_out = alu_in_1 + 1;                        // increment
+            7: alu_out = alu_in_1 - 1;                        // decrement
+            default: $display("Invalid instruction to ALU");
+        endcase
+    end
 end
 
 endmodule
