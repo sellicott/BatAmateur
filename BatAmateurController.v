@@ -98,12 +98,14 @@ begin
 		begin
 			if(INSTR[15:12] == 4'b0111)
 			begin
+        $display("register instruction");
 				//this is the pit of ALU
 				//tread lightly, and with a big 
 				
 				//check MOV
 				if(INSTR[11:7] == 5'b11111)
 				begin
+          $display("MOV instruction");
 					//r1 enable
 					REGS_EN[INSTR[5:3]] <= 1'b1;
 					//r2 enable and read out
@@ -115,6 +117,7 @@ begin
 				//check inc
 				else if(INSTR[11:7] == 5'b11110)
 				begin
+          $display("INC instruction");
 					//r1 inc and read out (no enable)
 					REGS_INC[INSTR[5:3]] <= 1'b1;
 					REGS_RW[INSTR[5:3]] <= 1'b0;
@@ -123,8 +126,10 @@ begin
 				end
 				else
 				begin
+          $display("ALU instruction");
 					// move from op1 to register A if op1 is not register A
 					if (INSTR[5:3] != 3'h0) begin
+            $display("move op1 to A");
 						REGS_EN[0] <= 1'b1;
 						REGS_RW[0] <= 1'b0; // write reg A
 						REGS_EN[INSTR[5:3]] <= 1'b1;
@@ -184,9 +189,11 @@ begin
 		begin
 			if(INSTR[15:12] == 4'b0111)
 			begin
+        $display("ALU instruction");
 				// move from op2 to register B if op2 is not register B
 				if (INSTR[2:0] != 3'h0) 
 				begin
+          $display("move op2 to B");
 					REGS_EN[1] <= 1'b1;
 					REGS_RW[1] <= 1'b0; // write reg A
 					REGS_EN[INSTR[2:0]] <= 1'b1;
