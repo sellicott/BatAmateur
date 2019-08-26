@@ -30,7 +30,7 @@ initial begin
     RAM_EN = 1'b0;
     RAM_RW = 1'b0; // write ram
     ADDRESS_BUS = {ADDRESS_WIDTH{1'b0}};
-    DATA_BUS = {16{1'b0}}
+    DATA_BUS = {16{1'b0}};
     // load in data values
 #CLK_PERIOD
     RESET = 1'b1;
