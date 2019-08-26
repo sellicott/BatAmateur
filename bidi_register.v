@@ -34,7 +34,7 @@ input wire RW;
 input wire ENABLE;
 input wire COUNT;
 // OUTPUT
-inout reg [BUS_WIDTH-1:0] DATA;
+inout wire [BUS_WIDTH-1:0] DATA;
 
 reg [BUS_WIDTH-1:0] INTERNAL_DATA;
 
