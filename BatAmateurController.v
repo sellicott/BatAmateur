@@ -224,8 +224,8 @@ begin
           //i guess 11 is unconditional unjump lmao
           if ( 
             (INSTR[13:12] == 2'd0) || // branch unconditional
-            (INSTR[13:12] == 2'd1 && ALU_REG[0] == 1'b0) || // branch if zero
-            (INSTR[13:12] == 2'd2 && ALU_REG[0] == 1'b1) // branch if one
+            (INSTR[13:12] == 2'd1 && ALU_REG[0] == 1'b1) || // branch if zero
+            (INSTR[13:12] == 2'd2 && ALU_REG[0] == 1'b0) // branch if one
           ) 
           begin
             // move the location (stored in the RAM) 
