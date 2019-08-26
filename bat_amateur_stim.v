@@ -65,7 +65,7 @@ initial begin
 // MOV R2 <- A 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0004;
-    DATA_BUS = 16'h7FA0;
+    DATA_BUS = 16'h7F90;
 // MOV R7 <- R2 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0005;
