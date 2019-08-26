@@ -200,7 +200,7 @@ begin
     begin
       $display("ALU instruction");
       // move from op2 to register B if op2 is not register B
-      if (INSTR[2:0] != 3'h0) 
+      if (INSTR[2:0] != 3'h1) 
       begin
         $display("move op2 to B");
         REGS_EN[1] <= 1'b1;
@@ -302,11 +302,11 @@ begin
       C_OUT <= ALU_REG[1];
       // select what accumulator to write to
       if (INSTR[6]) begin
-        REGS_EN[0] <= 1'b1;
-        REGS_RW[0] <= 1'b0; //write
-      end else begin
         REGS_EN[1] <= 1'b1;
         REGS_RW[1] <= 1'b0; //write
+      end else begin
+        REGS_EN[0] <= 1'b1;
+        REGS_RW[0] <= 1'b0; //write
       end
       uOP <= 3'b111;
     end
