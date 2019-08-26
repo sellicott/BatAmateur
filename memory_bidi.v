@@ -27,8 +27,6 @@ integer k;
 always @ (posedge clk or reset)
 begin 
     if (!reset) begin
-        data_out <= {16{1'b0}};
-
         for (k = 0; k < memory_size; k = k + 1)
         begin 
             memory_registers[k] <= {16{1'b0}};
