@@ -33,7 +33,7 @@ module BatAmateurController(
 
 reg [2:0] uOP;
 
-always @(negedge CLK) //negedge to avoid causing race conditions
+always @(posedge CLK) //negedge to avoid causing race conditions
 begin
 	//increment the uOP
 	//reset state for uOP is 3, then
