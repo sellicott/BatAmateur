@@ -6,7 +6,7 @@ wire [15:0] in_1;
 wire [15:0] in_2;
 wire carry_in;
 wire enable;
-wire [2:0] select;
+wire [4:0] select;
 wire [15:0] data;
 wire carry_out;
 wire zero_flag;

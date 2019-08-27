@@ -6,7 +6,7 @@ module alu_stim
    output reg [15:0] in_2,
    output reg carry_in,
    output reg enable,
-   output reg [2:0] select,
+   output reg [4:0] select,
    input wire [15:0] data,
    input wire carry_out,
    input wire zero_flag 
@@ -35,7 +35,7 @@ begin
 
     // first input is all ones and we invert it
     carry_in = 0;
-    select = 3'd5; 
+    select = 5; 
     in_1 = 16'hffff;
     in_2 = 16'h0000;
     enable = 1;
