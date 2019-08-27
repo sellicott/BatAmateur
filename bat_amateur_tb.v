@@ -14,8 +14,8 @@ wire [15:0] OUTPUT_BUS;
 bat_amateur my_bat_amateur (
     .DATA(DATA_BUS),
     .ADDRESS(ADDRESS_BUS),
-    .RAM_RW(RAM_RW),
-    .RAM_EN(HALT),
+    .EXT_RAM_RW(RAM_RW),
+    .EXT_RAM_EN(HALT),
     .HALT(HALT),
     .CLK(CLK),
     .RST(RESET),

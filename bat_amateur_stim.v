@@ -30,72 +30,82 @@ initial begin
     RAM_EN = 1'b0;
     RAM_RW = 1'b0; // write ram
     ADDRESS_BUS = {ADDRESS_WIDTH{1'b0}};
+    DATA_BUS = {16{1'b0}};
     // load in data values
 #CLK_PERIOD
     RESET = 1'b1;
     RAM_EN = 1'b1;
     RAM_RW = 1'b0; // write ram
     ADDRESS_BUS = 16'h0010;
-    DATA_BUS = 16'd0;
+    DATA_BUS = 16'd5;
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0011;
-    DATA_BUS = 16'd1;
+    DATA_BUS = 16'd0;
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0012;
-    DATA_BUS = 16'd5;
+    DATA_BUS = 16'd1;
 
     // load the instructions
     // LDA <value 5>
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0000;
-    DATA_BUS = 16'h0012;
-    // MOV A -> R3
+    DATA_BUS = 16'h0010;
+    // MOV R3 <- A
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0001;
     DATA_BUS = 16'h7F98;
-// LDA VAL 0
+// LDB VAL 0
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0002;
-    DATA_BUS = 16'h0010;
+    DATA_BUS = 16'h1011;
 // LDA VAL 1
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0003;
-    DATA_BUS = 16'h0011;
-// A+B -> A
+    DATA_BUS = 16'h0012;
+// MOV R2 <- A 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0004;
-    DATA_BUS = 16'h7041;
-// MOV B -> R2
+    DATA_BUS = 16'h7F90;
+// MOV R7 <- R2 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0005;
-    DATA_BUS = 16'h7F91;
-// MOV A -> B 
+    DATA_BUS = 16'h7FFA;
+// B <- R2 + B 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0006;
-    DATA_BUS = 16'h7F88;
-// MOV R2 -> A 
+    DATA_BUS = 16'h7051;
+// MOV A <- R2 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0007;
     DATA_BUS = 16'h7F82;
+// MOV R2 <- B
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0008;
-    DATA_BUS = 16'h7FBA;
-// DEC r3
+    DATA_BUS = 16'h7F91;
+// MOV B <- A
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0009;
-    DATA_BUS = 16'h73E1;
-// JNZ 0x04
+    DATA_BUS = 16'h7F88;
+// MOV R7 <- R2
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000A;
-    DATA_BUS = 16'h6FF9;
-// NOP
+    DATA_BUS = 16'h7FFA;
+// DEC r3
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000B;
-    DATA_BUS = 16'hF000;
-// JMP -1 
+    DATA_BUS = 16'h7399;
+// MOV R3 <- A 
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000C;
-    DATA_BUS = 16'h4FFF;
+    DATA_BUS = 16'h7F98;
+// JNZ 0x0006
+#CLK_PERIOD
+    ADDRESS_BUS = 16'h000D;
+    DATA_BUS = 16'h6006;
+// JMP 0x000E 
+#CLK_PERIOD
+    ADDRESS_BUS = 16'h000E;
+    DATA_BUS = 16'h400E;
 
 #CLK_PERIOD
   ADDRESS_BUS = {16{1'bz}};
