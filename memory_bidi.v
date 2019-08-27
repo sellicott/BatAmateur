@@ -12,7 +12,7 @@ module memory_bidi
 
 // constants
 parameter address_size = 16;
-parameter memory_size = 16;
+parameter memory_size = 256;
 
 // inputs
 input wire reset, clk, read_write, enable;
@@ -33,7 +33,7 @@ begin
     end
 end
 
-assign small_address = { {12{1'b0}}, address[3:0] };
+assign small_address = { {8{1'b0}}, address[7:0] };
 
 assign data = (enable && read_write == 1) ? memory_registers[small_address] : {16{1'bz}};
 
