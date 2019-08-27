@@ -176,10 +176,6 @@ begin
           PC_EN <= 1'b1;
           PC_RW <= 1'b0; // write
         end 
-        // otherwise incriment the program counter
-        else begin
-          PC_INC <= 1'b1;
-        end
         uOP <= 3'b111;
       end
       else begin
@@ -236,10 +232,6 @@ begin
             PC_RW <= 1'b0; // write
 
           end 
-          // otherwise incriment the program counter
-          else begin
-            PC_INC <= 1'b1;
-          end
           uOP <= 3'b111;
         end
         else begin
