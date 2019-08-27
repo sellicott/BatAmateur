@@ -4,7 +4,7 @@
 //if the bus is 2 wide, it's r/w, then en
 //if three, it's inc, then  r/w, then en
 
-module main(
+module bat_amateur (
 	input wire [15:0] DATA,
 	input wire [15:0] ADDRESS,
 	input wire EXT_RAM_RW, EXT_RAM_EN, HALT, CLK, RST,
@@ -50,11 +50,6 @@ begin
 	//don't be shy
 	if(RST == 1'b0)
 	begin
-		for(i = 0; i < 65536; i++)
-		begin
-			RAM[i] = 0;
-		end
-		
 		for(i = 0; i < 8; i++)
 		begin
 			REGS[i] = 0;
