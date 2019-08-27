@@ -56,7 +56,7 @@ BatAmateurController CTRL(
 alu ALU(
     .in_1(ALU_IN1), 
     .in_2(ALU_IN2), 
-    .select(ALU_OP[3:0]), 
+    .select(ALU_OP[4:0]), 
     .enable(ALU_EN), 
     .carry_in(1'b0),
     .data(BUS), 
