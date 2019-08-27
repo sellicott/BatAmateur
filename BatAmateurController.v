@@ -204,6 +204,8 @@ begin
         REGS_RW[INSTR[2:0]] <= 1'b1; // read op1
       end
       // otherwise do nothing
+      ALU_EN <= 1'b1;
+      ALU_OP <= INSTR[11:7];
 
     // Memory instructions
     end 
