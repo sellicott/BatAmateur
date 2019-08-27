@@ -29,8 +29,18 @@ wire carry_out, zero_flag;
 reg ZERO_FLAG;
 reg C_OUT;
 
-always @(negedge CLK) //negedge to avoid causing race conditions
+always @(posedge CLK) //negedge to avoid causing race conditions
 begin
+	if(HALT == 1'b1)
+	begin
+	    //we essentially touch nothing else except ram
+	    if(EXT_RAM_RW == 1'b0 && EXT_RAM_EN == 1'b1)
+	    begin
+	        RAM[ADDRESS] <= DATA;
+	    end
+	end
+	else
+	begin
 	//increment the uOP
 	//reset state for uOP is 3, then
 	uOP = uOP + 3'd1;
@@ -295,12 +305,14 @@ begin
   end
 	endcase
 	end
+	end
 end
 
 //i'm a lazybones brogrammer
 //how else am i to get the values i need into the alu???
 assign alu_in_1 = REGS[0];
 assign alu_in_2 = REGS[1];
+assign OUT = REGS[7];
 assign carry_out = (!alu_enable) ? 1'bz : alu_out[16];
 assign zero_flag = (!alu_enable) ? 1'bz   
                  : (alu_out[15:0] == 16'b0) ? 1'b1
