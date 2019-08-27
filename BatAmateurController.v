@@ -164,8 +164,8 @@ begin
         //i guess 11 is unconditional unjump lmao
         if ( 
           (INSTR[13:12] == 2'd0) || // branch unconditional
-          (INSTR[13:12] == 2'd1 && ZERO_FLAG == 1'b0) || // branch if zero
-          (INSTR[13:12] == 2'd2 && ZERO_FLAG == 1'b1) // branch if one
+          (INSTR[13:12] == 2'd1 && ZERO_FLAG == 1'b1) || // branch if zero
+          (INSTR[13:12] == 2'd2 && ZERO_FLAG == 1'b0) // branch if one
         ) 
         begin
           // move the location (stored in the instruction register) 
@@ -175,7 +175,6 @@ begin
           PC_INC <= 1'b0;
           PC_EN <= 1'b1;
           PC_RW <= 1'b0; // write
-
         end 
         // otherwise incriment the program counter
         else begin
@@ -224,8 +223,8 @@ begin
           //i guess 11 is unconditional unjump lmao
           if ( 
             (INSTR[13:12] == 2'd0) || // branch unconditional
-            (INSTR[13:12] == 2'd1 && ALU_REG[0] == 1'b1) || // branch if zero
-            (INSTR[13:12] == 2'd2 && ALU_REG[0] == 1'b0) // branch if one
+            (INSTR[13:12] == 2'd1 && ZERO_FLAG == 1'b1) || // branch if zero
+            (INSTR[13:12] == 2'd2 && ZERO_FLAG == 1'b0) // branch if one
           ) 
           begin
             // move the location (stored in the RAM) 
