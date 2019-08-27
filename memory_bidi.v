@@ -24,15 +24,9 @@ reg [15:0] memory_registers [memory_size-1:0];
 integer k;
 
 
-always @ (posedge clk or reset)
+always @ (posedge clk)
 begin 
-    if (!reset) begin
-        for (k = 0; k < memory_size; k = k + 1)
-        begin 
-            memory_registers[k] <= {16{1'b0}};
-        end
-    end
-    else if (enable && read_write == 0) begin
+    if (enable && read_write == 0) begin
         memory_registers[address] <= data;
     end
 end

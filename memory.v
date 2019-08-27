@@ -28,31 +28,19 @@ reg [15:0] memory_registers [memory_size-1:0];
 integer k;
 
 
-always @ (posedge clk or reset)
+always @ (posedge clk)
 begin 
-    if (reset == 1'b0)
-    begin
+    if (out_en) 
+    begin 
+        data_out <= memory_registers[address];
+    end     
+    else begin
         data_out <= {16{1'bz}};
-
-        for (k = 0; k < memory_size; k = k + 1)
-        begin 
-            memory_registers[k] <= {16{1'b0}};
-        end
     end
-    else
-    begin
-        if (out_en) 
-        begin 
-            data_out <= memory_registers[address];
-        end     
-        else begin
-            data_out <= {16{1'bz}};
-        end
 
-        if (load) 
-        begin
-            memory_registers[address] <= data_in;
-        end
+    if (load) 
+    begin
+        memory_registers[address] <= data_in;
     end
 end
 
