@@ -81,11 +81,11 @@ initial begin
 // MOV R2 <- B
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0008;
-    DATA_BUS = 16'h7F88;
+    DATA_BUS = 16'h7F91;
 // MOV B <- A
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0009;
-    DATA_BUS = 16'h7FFA;
+    DATA_BUS = 16'h7F88;
 // MOV R7 <- R2
 #CLK_PERIOD
     ADDRESS_BUS = 16'h000A;
