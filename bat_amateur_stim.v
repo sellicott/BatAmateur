@@ -37,7 +37,7 @@ initial begin
     RAM_EN = 1'b1;
     RAM_RW = 1'b0; // write ram
     ADDRESS_BUS = 16'h0010;
-    DATA_BUS = 16'd5;
+    DATA_BUS = 16'd1;
 #CLK_PERIOD
     ADDRESS_BUS = 16'h0011;
     DATA_BUS = 16'd0;
