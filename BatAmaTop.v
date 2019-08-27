@@ -13,6 +13,7 @@ wire [7:0]  ALU_REG;
 wire [15:0] INSTR;
 wire [15:0] ALU_IN1, ALU_IN2;
 wire [15:0] BUS;
+wire [15:0] INT_ADDRESS;
 
 wire PC_INC, PC_RW, PC_EN;
 wire MAR_LOAD, MAR_EN;
@@ -71,8 +72,22 @@ MAR_REG (
     .LOAD(MAR_LOAD), 
     .ENABLE(MAR_EN & !HALT),
     .DATA_IN(BUS), 
-    .DATA_OUT(ADDRESS),
+    .DATA_OUT(INT_ADDRESS),
     .COUNT(1'b0)
+);
+
+assign FORCE_RAM_RW = (HALT) ? EXT_RAM_RW : RAM_RW;
+assign FORCE_RAM_EN = (HALT) ? EXT_RAM_EN : RAM_EN;
+assign INT_ADDRESS = (HALT) ? ADDRESS : {16{1'bz}};
+assign BUS = (HALT) ? DATA : {16{1'bz}};
+
+memory_bidi RAM(
+    .reset(RST), 
+    .clk(CLK), 
+    .read_write(FORCE_RAM_RW), 
+    .enable(FORCE_RAM_EN), 
+    .address(INT_ADDRESS), 
+    .data(BUS)
 );
 
 bidi_register PC(
@@ -171,16 +186,5 @@ bidi_register_output OUTREG(
     .OUTPUT(OUT)
 );
 
-assign FORCE_RAM_RW = (HALT) ? EXT_RAM_RW : RAM_RW;
-assign FORCE_RAM_EN = (HALT) ? EXT_RAM_EN : RAM_EN;
-memory_bidi RAM(
-    .reset(RST), 
-    .clk(CLK), 
-    .read_write(FORCE_RAM_RW), 
-	.enable(FORCE_RAM_EN), 
-    .address(ADDRESS), 
-    .data(BUS)
-);
 
-assign BUS = (HALT) ? DATA : {16{1'bz}};
 endmodule
