@@ -12,12 +12,14 @@ module memory_bidi
 
 // constants
 parameter address_size = 16;
-parameter memory_size = 2 ** address_size;
+parameter memory_size = 16;
 
 // inputs
 input wire reset, clk, read_write, enable;
 input wire [address_size-1:0] address;                 
 inout wire [15:0] data;
+
+wire [15:0] small_address;
 
 // internal
 reg [15:0] memory_registers [memory_size-1:0];
@@ -27,10 +29,12 @@ integer k;
 always @ (posedge clk)
 begin 
     if (enable && read_write == 0) begin
-        memory_registers[address] <= data;
+        memory_registers[small_address] <= data;
     end
 end
 
-assign data = (enable && read_write == 1) ? memory_registers[address] : {16{1'bz}};
+assign small_address = { {12{1'b0}}, address[3:0] };
+
+assign data = (enable && read_write == 1) ? memory_registers[small_address] : {16{1'bz}};
 
 endmodule
