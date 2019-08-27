@@ -31,23 +31,23 @@ BatAmateurController CTRL(
     .RST(RST & !HALT), 
     .INSTR(INSTR), 
 
-	.PC_INC(PC_INC),
-	.PC_RW(PC_RW),
-	.PC_EN(PC_EN),
+    .PC_INC(PC_INC),
+    .PC_RW(PC_RW),
+    .PC_EN(PC_EN),
 
     .MAR_LOAD(MAR_LOAD),
-	.MAR_EN(MAR_EN),
+    .MAR_EN(MAR_EN),
 
-	.RAM_RW(RAM_RW),
-	.RAM_EN(RAM_EN),
+    .RAM_RW(RAM_RW),
+    .RAM_EN(RAM_EN),
 	
-	.IR_LOAD(IR_LOAD),
-	.IR_EN(IR_EN),
+    .IR_LOAD(IR_LOAD),
+    .IR_EN(IR_EN),
 
-	//A, B, 3, 4, 5, 6, 7, OUT (from small to big)
-	.REGS_INC(REGS_INC),
-	.REGS_RW(REGS_RW),
-	.REGS_EN(REGS_EN),
+    //A, B, 3, 4, 5, 6, 7, OUT (from small to big)
+    .REGS_INC(REGS_INC),
+    .REGS_RW(REGS_RW),
+    .REGS_EN(REGS_EN),
 
     .ALU_EN(ALU_EN),
     .ALU_OP(ALU_OP)
