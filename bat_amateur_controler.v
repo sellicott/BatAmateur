@@ -79,7 +79,7 @@ begin
         if (read_alu_flags)
         begin
             ZERO_FLAG <= ALU_REG[0];
-            COUT_FLAG <= ALU_REG[1];
+            C_OUT <= ALU_REG[1];
         end
     end
 end
