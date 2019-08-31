@@ -79,7 +79,7 @@ begin
     // decode
     12'b?????????001: begin
       // PC <= PC + 1, IR <= RAM[MAR]
-      PC_INC <= 1'b01 PC_RW <= 1'b0; PC_EN <= 1'b0;
+      PC_INC <= 1'b1; PC_RW <= 1'b0; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
       RAM_RW <= 1'b1; RAM_EN <= 1'b1;
       IR_LOAD <= 1'b1; IR_EN <= 1'b0;
