@@ -36,6 +36,23 @@ reg ZERO_FLAG;
 reg C_OUT;
 
 wire reset_counter;
+wire read_alu_flags;
+
+controller_rom my_rom (
+    .INSTR(INSTR),
+    .uOP(uOP),
+    .ZERO_FLAG(ZERO_FLAG),
+    .COUT_FLAG(C_OUT),
+    .RESET_uOP(reset_counter),
+    .READ_FLAGS(read_alu_flags),
+
+    .PC_INC(PC_INC), PC_RW(PC_RW), PC_EN(PC_EN),
+    .MAR_LOAD(MAR_LOAD), .MAR_EN(MAR_EN),
+    .RAM_RW(RAM_RW), .RAM_EN(RAM_EN),
+    .IR_LOAD(IR_LOAD), .IR_EN(IR_EN),
+    .REGS_INC(REGS_INC), .REGS_RW(REGS_RW), .REGS_EN(REGS_EN),
+    .ALU_EN(ALU_EN), .ALU_OP(ALU_OP)
+);
 
 // make a counter for the ROM
 //negedge to avoid causing race conditions
@@ -47,13 +64,23 @@ begin
         ZERO_FLAG <= 1'b0;
         C_OUT <= 1'b0;
     end
-    else if (reset_counter)
-        uOP <= 3'b111;
-    else
+    else 
     begin
-        //increment the uOP
-        //reset state for uOP is 3, then
-        uOP <= uOP + 4'd1;
+        if (reset_counter)
+            uOP <= 3'b111;
+        else
+        begin
+            //increment the uOP
+            //reset state for uOP is 3, then
+            uOP <= uOP + 4'd1;
+        end
+
+        // read the flags
+        if (read_alu_flags)
+        begin
+            ZERO_FLAG <= ALU_REG[0];
+            COUT_FLAG <= ALU_REG[1];
+        end
     end
 end
 

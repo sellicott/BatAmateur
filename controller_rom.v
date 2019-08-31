@@ -5,14 +5,14 @@
 //if three, it's inc, then  r/w, then en
 
 module controller_rom(
-    input wire [15:0] INSTR, // instruction high
-    input wire [2:0]  uOP,   // microoperation
+  input wire [15:0] INSTR, // instruction high
+  input wire [2:0]  uOP,   // microoperation
 
-    input wire ZERO_FLAG,
-    input wire CIN_FLAG,
+  input wire ZERO_FLAG,
+  input wire COUT_FLAG,
 
-    output reg RESET_uOP,
-    output reg READ_FLAGS,
+  output reg RESET_uOP,
+  output reg READ_FLAGS,
 
 	output reg PC_INC,
 	output reg PC_RW,
