@@ -60,9 +60,9 @@ assign jump_cond = (
 
 always @*
 begin
-  casez ({instr_h, instr_l, uOP})
+  casez ({jump_cond, iacc_a_b, op1, op2, nstr_h, instr_l, uOP})
     // fetch 
-    12'b?????????000: begin
+    12'b ?_?_???_???_?????????000: begin
       // MAR <- PC 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b1;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
@@ -74,7 +74,7 @@ begin
     end
 
     // decode
-    12'b?????????001: begin
+    12'b ?_?_???_???_?????????001: begin
       // PC <= PC + 1, IR <= RAM[MAR]
       PC_INC <= 1'b1; PC_RW <= 1'b0; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
@@ -86,7 +86,7 @@ begin
     end
 
     // reset
-    12'b?????????111: begin
+    12'b ?_?_???_???_?????????111: begin
       // default state 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
@@ -100,7 +100,7 @@ begin
     // for LDA, LDB, STA, STB
     // direct and indirect uOP 2
     // MAR <= IR[11:0]
-    12'b?0???????010: begin // uOP 2
+    12'b ?_?_???_???_?0???????010: begin // uOP 2
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
@@ -113,7 +113,7 @@ begin
     // for LDA, LDB, STA, STB 
     // indirect uOP 3
     // MAR <= RAM[MAR]
-    12'b10???????010: begin // uOP 3
+    12'b ?_?_???_???_10???????010: begin // uOP 3
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
       RAM_RW <= 1'b1; RAM_EN <= 1'b1;
@@ -125,8 +125,8 @@ begin
 
     // LDA, LDB (direct or indirect)
     // A or B <= RAM[MAR]
-    12'b000??????011, // direct
-    12'b100??????100: // indirect
+    12'b ?_?_???_???_000??????011, // direct
+    12'b ?_?_???_???_100??????100: // indirect
     begin
       // read from the ram
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -148,8 +148,8 @@ begin
 
     // STA, STB (direct or indirect)
     // RAM[MAR] <= A or B
-    12'b001??????011, // direct
-    12'b101??????100: // indirect
+    12'b ?_?_???_???_001??????011, // direct
+    12'b ?_?_???_???_101??????100: // indirect
     begin
       // write to the ram
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -171,9 +171,9 @@ begin
 
     // JMP (indirect) uOP 2
     // MAR <= IR[11:0]
-    12'b1100?????010,
-    12'b1101?????010,
-    12'b1110?????010: begin // uOP 2
+    12'b ?_?_???_???_1100?????010,
+    12'b ?_?_???_???_1101?????010,
+    12'b ?_?_???_???_1110?????010: begin // uOP 2
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
@@ -184,13 +184,13 @@ begin
     end
 
     // JMP (direct) uOP 2
-    12'b0100?????010,
-    12'b0101?????010,
-    12'b0110?????010,
+    12'b ?_?_???_???_0100?????010,
+    12'b ?_?_???_???_0101?????010,
+    12'b ?_?_???_???_0110?????010,
     // JMP (indirect) uOP 3
-    12'b1100?????011,
-    12'b1101?????011,
-    12'b1110?????011:
+    12'b ?_?_???_???_1100?????011,
+    12'b ?_?_???_???_1101?????011,
+    12'b ?_?_???_???_1110?????011:
     // PC <- IR[11:0]
     begin
       // write PC from IR 
@@ -212,7 +212,7 @@ begin
     // register
     // ALU
     // A <= r[op1]
-    12'b011100???010: // uOP 2
+    12'b ?_?_???_???_011100???010: // uOP 2
     begin 
       // everything else off 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -230,7 +230,7 @@ begin
     end
 
     // B <= r[op2]
-    12'b011100???011: // uOP 3 
+    12'b ?_?_???_???_011100???011: // uOP 3 
     begin
       // everything else off 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -248,7 +248,7 @@ begin
     end
 
     // A or B <= ALU
-    12'b011100???100: 
+    12'b ?_?_???_???_011100???100: 
     begin
       // disable everything else
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -272,7 +272,7 @@ begin
     end
 
     // read flags (wait for them to have stabilized)
-    12'b011100???101: 
+    12'b ?_?_???_???_011100???101: 
     begin
       // disable everything else
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -290,7 +290,7 @@ begin
     end
 
     // MOV
-    12'b011111111010: begin
+    12'b ?_?_???_???_011111111010: begin
       // everything else off 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
@@ -309,7 +309,7 @@ begin
     end
 
     // NOP
-    12'b1111?????010:
+    12'b ?_?_???_???_1111?????010:
     begin
       // default state 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
