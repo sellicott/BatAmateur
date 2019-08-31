@@ -66,7 +66,7 @@ always @(INSTR or uOP)
 begin
   casez ({instr_h, instr_l, uOP})
     // fetch 
-    0'b?????????000: begin
+    12'b?????????000: begin
       // MAR <- PC 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b1;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
@@ -77,7 +77,7 @@ begin
     end
 
     // decode
-    0'b?????????001: begin
+    12'b?????????001: begin
       // PC <= PC + 1, IR <= RAM[MAR]
       PC_INC <= 1'b01 PC_RW <= 1'b0; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
@@ -88,7 +88,7 @@ begin
     end
 
     // reset
-    0'b?????????111: begin
+    12'b?????????111: begin
       // default state 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
@@ -104,7 +104,7 @@ begin
     // for LDA, LDB, STA, STB
     // direct and indirect uOP 2
     // MAR <= IR[11:0]
-    0'b?0???????010: begin // uOP 2
+    12'b?0???????010: begin // uOP 2
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
@@ -116,7 +116,7 @@ begin
     // for LDA, LDB, STA, STB 
     // indirect uOP 3
     // MAR <= RAM[MAR]
-    0'b10???????010: begin // uOP 3
+    12'b10???????010: begin // uOP 3
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
       RAM_RW <= 1'b1; RAM_EN <= 1'b1;
@@ -127,8 +127,8 @@ begin
 
     // LDA, LDB (direct or indirect)
     // A or B <= RAM[MAR]
-    0'b000??????011, // direct
-    0'b100??????100: // indirect
+    12'b000??????011, // direct
+    12'b100??????100: // indirect
     begin
       // read from the ram
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -149,8 +149,8 @@ begin
 
     // STA, STB (direct or indirect)
     // RAM[MAR] <= A or B
-    0'b001??????011, // direct
-    0'b101??????100: // indirect
+    12'b001??????011, // direct
+    12'b101??????100: // indirect
     begin
       // write to the ram
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -171,9 +171,9 @@ begin
 
     // JMP (indirect) uOP 2
     // MAR <= IR[11:0]
-    0'b1100?????010,
-    0'b1101?????010,
-    0'b1110?????010: begin // uOP 2
+    12'b1100?????010,
+    12'b1101?????010,
+    12'b1110?????010: begin // uOP 2
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b1; MAR_EN <= 1'b1;
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
@@ -183,23 +183,25 @@ begin
     end
 
     // JMP (direct) uOP 2
-    0'b0100?????010,
-    0'b0101?????010,
-    0'b0110?????010,
+    12'b0100?????010,
+    12'b0101?????010,
+    12'b0110?????010,
     // JMP (indirect) uOP 3
-    0'b1100?????011,
-    0'b1101?????011,
-    0'b1110?????011:
+    12'b1100?????011,
+    12'b1101?????011,
+    12'b1110?????011:
+    // PC <- IR[11:0]
     begin
+      // write PC from IR 
       PC_INC <= 1'b0; PC_RW <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
-      RAM_RW <= 1'b1;
-      IR_LOAD <= 1'b0; IR_EN <= 1'b0;
+      RAM_RW <= 1'b1; RAM_EN <= 1'b0;
+      IR_LOAD <= 1'b0; 
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
 
       // only allow the move if the jump condition is satisfied
-      RAM_EN <= (jump_cond) ? 1'b1 : 1'b0;
+      IR_EN <= (jump_cond) ? 1'b1 : 1'b0;
       PC_EN <=  (jump_cond) ? 1'b1 : 1'b0;
 
       RESET_uOP <= 1'b1;
@@ -208,7 +210,7 @@ begin
     // register
     // ALU
     // A <= r[op1]
-    0'b011100???010: // uOP 2
+    12'b011100???010: // uOP 2
     begin 
       // everything else off 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -219,13 +221,13 @@ begin
 
       REGS_INC <= 8'h00;
       // read from op1
-      REGS_RW <= 8'(1 << op1);
+      REGS_RW <= (1 << op1);
       // enable A and op1 
-      REGS_EN <= 8'h01 | 8'(1 << op1); 
+      REGS_EN <= 8'h01 | (1 << op1); 
     end
 
     // B <= r[op2]
-    0'b011100???011: // uOP 3 
+    12'b011100???011: // uOP 3 
     begin
       // everything else off 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -236,13 +238,13 @@ begin
 
       REGS_INC <= 8'h00;
       // read from op2
-      REGS_RW <= 8'(1 << op2);
+      REGS_RW <= (1 << op2);
       // enable B and op2 
-      REGS_EN <= 8'h02 | 8'(1 << op2); 
+      REGS_EN <= 8'h02 | (1 << op2); 
     end
 
     // A or B <= ALU
-    0'b011100???100: 
+    12'b011100???100: 
     begin
       // disable everything else
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -265,7 +267,7 @@ begin
     end
 
     // read flags (wait for them to have stabilized)
-    0'b011100???101: 
+    12'b011100???101: 
     begin
       // disable everything else
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
@@ -283,7 +285,7 @@ begin
     end
 
     // MOV
-    0'b011111111010: begin
+    12'b011111111010: begin
       // everything else off 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
       MAR_LOAD <= 1'b0; MAR_EN <= 1'b1;
@@ -293,15 +295,15 @@ begin
 
       REGS_INC <= 8'h00;
       // make the register we need to read from in read mode
-      REGS_RW <= 8'(1 << op2);
+      REGS_RW <= (1 << op2);
       // enable both registers
-      REGS_EN <= 8'(1 << op1) | 8'(1 << op2); 
+      REGS_EN <= (1 << op1) | (1 << op2); 
 
       RESET_uOP <= 1'b1;
     end
 
     // NOP
-    0'b1111?????010:
+    12'b1111?????010:
     begin
       // default state 
       PC_INC <= 1'b0; PC_RW <= 1'b1; PC_EN <= 1'b0;
