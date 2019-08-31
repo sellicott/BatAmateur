@@ -313,7 +313,7 @@ begin
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
 
-      RESET_uOP;
+      RESET_uOP <= 1'b1;
     end
     default:
     begin
@@ -325,7 +325,7 @@ begin
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
 
-      RESET_uOP;
+      RESET_uOP <= 1'b1;
     end
   endcase
 end
