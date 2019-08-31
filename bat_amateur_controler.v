@@ -5,31 +5,35 @@
 //if three, it's inc, then  r/w, then en
 
 module bat_amateur_controller ( 
-	input wire CLK, RST,
-	input wire [7:0] ALU_REG,
-	input wire [15:0] INSTR,
+  input wire CLK, RST,
+  input wire [7:0] ALU_REG,
+  input wire [15:0] INSTR,
 
-	output wire PC_INC,
-	output wire PC_RW,
-	output wire PC_EN,
+  output wire PC_INC,
+  output wire PC_RW,
+  output wire PC_EN,
 
-	output wire MAR_LOAD,
-	output wire MAR_EN,
+  output wire MAR_LOAD,
+  output wire MAR_EN,
 
-	output wire RAM_RW,
-	output wire RAM_EN,
-	
-	output wire IR_LOAD,
-	output wire IR_EN,
+  output wire RAM_RW,
+  output wire RAM_EN,
 
-	//A, B, 3, 4, 5, 6, 7, OUT (from small to big)
-	output wire [7:0] REGS_INC,
-	output wire [7:0] REGS_RW,
-	output wire [7:0] REGS_EN,
+  output wire IR_LOAD,
+  output wire IR_EN,
 
-	output wire ALU_EN,
-	output wire [4:0] ALU_OP
+  //A, B, 3, 4, 5, 6, 7, OUT (from small to big)
+  output wire [7:0] REGS_INC,
+  output wire [7:0] REGS_RW,
+  output wire [7:0] REGS_EN,
+
+  output wire ALU_EN,
+  output wire [4:0] ALU_OP
 );
+
+reg [2:0] uOP;
+reg ZERO_FLAG;
+reg C_OUT;
 
 wire reset_counter;
 wire read_alu_flags;
