@@ -4,7 +4,7 @@
 //if the bus is 2 wide, it's r/w, then en
 //if three, it's inc, then  r/w, then en
 
-module bat_amatuer_controller(
+module bat_amateur_controller ( 
 	input wire CLK, RST,
 	input wire [7:0] ALU_REG,
 	input wire [15:0] INSTR,
