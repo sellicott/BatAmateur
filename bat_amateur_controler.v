@@ -31,10 +31,6 @@ module bat_amatuer_controller(
 	output wire [4:0] ALU_OP
 );
 
-reg [2:0] uOP;
-reg ZERO_FLAG;
-reg C_OUT;
-
 wire reset_counter;
 wire read_alu_flags;
 
@@ -46,7 +42,7 @@ controller_rom my_rom (
     .RESET_uOP(reset_counter),
     .READ_FLAGS(read_alu_flags),
 
-    .PC_INC(PC_INC), PC_RW(PC_RW), PC_EN(PC_EN),
+    .PC_INC(PC_INC), .PC_RW(PC_RW), .PC_EN(PC_EN),
     .MAR_LOAD(MAR_LOAD), .MAR_EN(MAR_EN),
     .RAM_RW(RAM_RW), .RAM_EN(RAM_EN),
     .IR_LOAD(IR_LOAD), .IR_EN(IR_EN),
