@@ -58,7 +58,7 @@ assign jump_cond = (
   (instr_h[1:0] == 2'b10 && !ZERO_FLAG)   // branch if not zero
 );
 
-always @(INSTR or uOP)
+always @*
 begin
   casez ({instr_h, instr_l, uOP})
     // fetch 
