@@ -70,6 +70,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 0; ALU_OP <= 0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
     end
 
     // decode
@@ -81,6 +82,7 @@ begin
       IR_LOAD <= 1'b1; IR_EN <= 1'b0;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
     end
 
     // reset
@@ -92,9 +94,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
-
-      RESET_uOP <= 1'b0;
-      READ_FLAGS <= 1'b0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
     end 
 
     // for LDA, LDB, STA, STB
@@ -107,6 +107,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b1;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 0; ALU_OP <= 0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
     end
 
     // for LDA, LDB, STA, STB 
@@ -119,6 +120,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b1;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 0; ALU_OP <= 0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
     end
 
     // LDA, LDB (direct or indirect)
@@ -133,6 +135,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       REGS_INC[7:0] <= 8'h00; REGS_RW <= 8'h00; REGS_EN[7:2] <= 6'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
+      READ_FLAGS <= 1'b0;
 
       // all of the registers are set to write mode
       // select to enable either A or B
@@ -155,6 +158,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       REGS_INC[7:0] <= 8'h00; REGS_RW <= 8'hFF; REGS_EN[7:2] <= 6'h00;
       ALU_EN <= 1'b0; ALU_OP <= 1'b0;
+      READ_FLAGS <= 1'b0;
 
       // all of the registers are set to read mode
       // select to enable either A or B
@@ -176,6 +180,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b1;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 0; ALU_OP <= 0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
     end
 
     // JMP (direct) uOP 2
@@ -195,6 +200,7 @@ begin
       IR_LOAD <= 1'b0; 
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
+      READ_FLAGS <= 1'b0;
 
       // only allow the move if the jump condition is satisfied
       IR_EN <= (jump_cond) ? 1'b1 : 1'b0;
@@ -214,6 +220,7 @@ begin
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       ALU_EN <= 1'b0; ALU_OP <= 0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
 
       REGS_INC <= 8'h00;
       // read from op1
@@ -231,6 +238,7 @@ begin
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       ALU_EN <= 1'b0; ALU_OP <= 0;
+      RESET_uOP <= 1'b0; READ_FLAGS <= 1'b0;
 
       REGS_INC <= 8'h00;
       // read from op2
@@ -248,6 +256,7 @@ begin
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       REGS_INC[7:0] <= 8'h00; REGS_RW <= 8'h00; REGS_EN[7:2] <= 6'h00;
+      RESET_uOP <= 1'b0;
 
       // enable the ALU
       ALU_EN <= 1'b1; 
@@ -288,6 +297,7 @@ begin
       RAM_RW <= 1'b1; RAM_EN <= 1'b0;
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       ALU_EN <= 1'b0; ALU_OP <= 1'b0;
+      READ_FLAGS <= 1'b0;
 
       REGS_INC <= 8'h00;
       // make the register we need to read from in read mode
@@ -308,8 +318,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
-
-      RESET_uOP <= 1'b1;
+      RESET_uOP <= 1'b1; READ_FLAGS <= 1'b0;
     end
     default:
     begin
@@ -320,8 +329,7 @@ begin
       IR_LOAD <= 1'b0; IR_EN <= 1'b0;
       REGS_INC <= 8'h00; REGS_RW <= 8'hFF; REGS_EN <= 8'h00;
       ALU_EN <= 1'b0; ALU_OP <= 0;
-
-      RESET_uOP <= 1'b1;
+      RESET_uOP <= 1'b1; READ_FLAGS <= 1'b0;
     end
   endcase
 end

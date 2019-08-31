@@ -23,18 +23,16 @@ wire [15:0] small_address;
 
 // internal
 reg [15:0] memory_registers [memory_size-1:0];
-integer k;
-
 
 always @ (posedge clk)
 begin 
-    if (enable && read_write == 0) begin
+    if (enable && !read_write) begin
         memory_registers[small_address] <= data;
     end
 end
 
 assign small_address = { {8{1'b0}}, address[7:0] };
 
-assign data = (enable && read_write == 1) ? memory_registers[small_address] : {16{1'bz}};
+assign data = (enable && read_write) ? memory_registers[small_address] : {16{1'bz}};
 
 endmodule
