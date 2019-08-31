@@ -26,7 +26,7 @@ wire [7:0] REGS_INC;
 wire [7:0] REGS_RW;
 wire [7:0] REGS_EN;
 
-BatAmateurController CTRL(
+bat_amateur_controller CTRL(
     .CLK(CLK), 
     .ALU_REG(ALU_REG),
     .RST(RST & !HALT), 
