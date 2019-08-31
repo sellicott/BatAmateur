@@ -36,10 +36,6 @@ module controller_rom(
   output reg [4:0] ALU_OP
 );
 
-reg [2:0] uOP;
-reg ZERO_FLAG;
-reg C_OUT;
-
 wire [3:0] instr_h;
 wire [4:0] instr_l;
 wire acc_a_b;
