@@ -56,7 +56,7 @@ controller_rom my_rom (
 
 // make a counter for the ROM
 //negedge to avoid causing race conditions
-always @(negedge CLK or negedge RST) 
+always @(negedge CLK) 
 begin
     if(!RST)
     begin

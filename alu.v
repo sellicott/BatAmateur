@@ -26,15 +26,18 @@ assign data = (enable) ? result[15:0] : 16'bz;
 always @ (*) 
 begin
     case (select)
-        0: result = in_1 + in_2 + carry_in; // addition
-        1: result = in_1 - in_2;            // subtraction
-        2: result = in_1 & in_2;            // and operator
-        3: result = in_1 | in_2;            // or operator
-        4: result = in_1 ^ in_2;            // xor operator
-        5: result = ~in_1;                  // inversion
-        6: result = in_1 + 1;               // increment
-        7: result = in_1 - 1;               // decrement
-        default: $display("Invalid instruction to ALU");
+        0: result <= in_1 + in_2 + carry_in; // addition
+        1: result <= in_1 - in_2;            // subtraction
+        2: result <= in_1 & in_2;            // and operator
+        3: result <= in_1 | in_2;            // or operator
+        4: result <= in_1 ^ in_2;            // xor operator
+        5: result <= ~in_1;                  // inversion
+        6: result <= in_1 + 1;               // increment
+        7: result <= in_1 - 1;               // decrement
+        default: begin
+            $display("Invalid instruction to ALU");
+            result <= 0;
+        end
     endcase
 end
 

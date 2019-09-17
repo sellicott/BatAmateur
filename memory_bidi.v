@@ -21,14 +21,20 @@ inout wire [15:0] data;
 
 // internal
 reg [15:0] memory_registers [memory_size-1:0];
+reg [15:0] data_out;
 
-always @ (posedge clk)
+always @ (negedge clk)
 begin 
-    if (enable && !read_write) begin
-        memory_registers[address] <= data;
+    if (!read_write) begin
+        if (enable) begin
+            memory_registers[address] <= data;
+         end
+    end 
+    else begin
+        data_out <= memory_registers[address];
     end
 end
 
-assign data = (enable && read_write) ? memory_registers[address] : {16{1'bz}};
+assign data = (enable && read_write) ? data_out : {16{1'bz}};
 
 endmodule

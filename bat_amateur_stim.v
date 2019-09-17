@@ -10,7 +10,7 @@ DATA_BUS,
 ADDRESS_BUS,
 OUTPUT_BUS
 );
-parameter CLK_HALF_PERIOD = 5;
+parameter CLK_HALF_PERIOD = 50;
 parameter CLK_PERIOD = 2*CLK_HALF_PERIOD;
 parameter ADDRESS_WIDTH = 16;
 
@@ -116,5 +116,3 @@ initial begin
 end 
 
 always #CLK_HALF_PERIOD CLK = !CLK;
-
-endmodule
